@@ -9,6 +9,9 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    // Enable soft deletes for this class
+    use SoftDeletes;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -26,4 +29,11 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+     public function roles()
+    {
+        return $this->belongsTo('App\Role');
+    }
+
 }
