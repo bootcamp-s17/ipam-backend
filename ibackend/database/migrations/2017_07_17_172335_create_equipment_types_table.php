@@ -30,8 +30,5 @@ class CreateEquipmentTypesTable extends Migration
         Schema::dropIfExists('equipment_types');
     }
 
-    public function equipments()
-    {
-        return $this->hasMany('App\Equipments');
-    }
+  
 }

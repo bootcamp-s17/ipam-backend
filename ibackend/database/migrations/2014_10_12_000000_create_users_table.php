@@ -37,8 +37,4 @@ class CreateUsersTable extends Migration
     }
 
 
-    public function roles()
-    {
-        return $this->belongsToMany('App\Roles');
-    }
 }
