@@ -17,7 +17,7 @@ class CreateSubnetsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('site_id')->unsigned();
-            $table->foreign('site_id')->refereces('id')->on('sites');
+            $table->foreign('site_id')->references('id')->on('sites');
             $table->ipAddress('subnet_address');
             $table->integer('mask_bits');
             $table->integer('vLan');
