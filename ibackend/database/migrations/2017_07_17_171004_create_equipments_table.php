@@ -33,8 +33,8 @@ class CreateEquipmentTable extends Migration
             $table->string('printer_name');
             $table->string('share_name');
             $table->string('share_comment');
-            $table->integer('note_id')->unsigned();
-            $table->foreign('note_id')->refereces('id')->on('notes');
+            // $table->integer('note_id')->unsigned();
+            // $table->foreign('note_id')->refereces('id')->on('notes');
             $table->softDeletes();
             $table->timestamps();
 

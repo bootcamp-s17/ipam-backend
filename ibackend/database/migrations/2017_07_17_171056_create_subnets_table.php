@@ -21,8 +21,8 @@ class CreateSubnetsTable extends Migration
             $table->ipAddress('subnet_address');
             $table->integer('mask_bits');
             $table->integer('vLan');
-            $table->integer('note_id')->unsigned();
-            $table->foreign('note_id')->refereces('id')->on('notes');
+            // $table->integer('note_id')->unsigned();
+            // $table->foreign('note_id')->refereces('id')->on('notes');
             $table->softDeletes();
             $table->timestamps();
         });
