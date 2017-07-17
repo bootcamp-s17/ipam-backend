@@ -15,7 +15,7 @@ class Room extends Model
     	return $this->morphMany('App\Note', 'noteable');
     }
 
-    public fucntion sites() {
+    public function sites() {
     	return $this->hasMany('App\Site');
     }
 }

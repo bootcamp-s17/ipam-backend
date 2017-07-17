@@ -17,7 +17,7 @@ class CreateNotesTable extends Migration
             $table->increments('id');
             $table->string('text');
             $table->integer('user_id');
-            $table->foriegn('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->integer('noteable_id');
             $table->string('noteable_type');
             $table->timestamps();
