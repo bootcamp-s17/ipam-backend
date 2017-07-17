@@ -24,7 +24,7 @@ class CreateEquipmentTable extends Migration
             $table->string('serial_number');
             $table->ipAddress('ip_address');
             $table->integer('site_id')->unsigned();
-            $table->foreign('site_id')->references('id')->on('site');
+            $table->foreign('site_id')->references('id')->on('sites');
             $table->string('host_name');
             $table->integer('port_number');
             $table->macAddress('mac_address');
@@ -33,8 +33,8 @@ class CreateEquipmentTable extends Migration
             $table->string('printer_name');
             $table->string('share_name');
             $table->string('share_comment');
-            $table->integer('notes_id')->unsigned();
-            $table->foreign('notes_id')->refereces('id')->on('notes');
+            $table->integer('note_id')->unsigned();
+            $table->foreign('note_id')->refereces('id')->on('notes');
             $table->softDeletes();
             $table->timestamps();
 

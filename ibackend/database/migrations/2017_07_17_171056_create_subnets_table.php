@@ -17,12 +17,12 @@ class CreateSubnetsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('site_id')->unsigned();
-            $table->foreign('site_id')->refereces('id')->on('site');
+            $table->foreign('site_id')->refereces('id')->on('sites');
             $table->ipAddress('subnet_address');
             $table->integer('mask_bits');
             $table->integer('vLan');
-            $table->integer('notes_id')->unsigned();
-            $table->foreign('notes_id')->refereces('id')->on('notes');
+            $table->integer('note_id')->unsigned();
+            $table->foreign('note_id')->refereces('id')->on('notes');
             $table->softDeletes();
             $table->timestamps();
         });

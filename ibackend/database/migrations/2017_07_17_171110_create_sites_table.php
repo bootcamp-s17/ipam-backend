@@ -19,8 +19,8 @@ class CreateSitesTable extends Migration
             $table->string('address');
             $table->string('abbreviation');
             $table->string('site_contact');
-            $table->integer('notes_id')->unsigned();
-            $table->foreign('notes_id')->refereces('id')->on('notes');
+            $table->integer('note_id')->unsigned();
+            $table->foreign('note_id')->refereces('id')->on('notes');
             $table->softDeletes();
             $table->timestamps();
         });
