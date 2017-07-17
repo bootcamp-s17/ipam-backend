@@ -4,7 +4,11 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+<<<<<<< HEAD
 class CreateEquipmentsTable extends Migration //added an s 
+=======
+class CreateEquipmentsTable extends Migration
+>>>>>>> 4a3247e2d7cb51cf96b7452ace1c4841ffe9f4e7
 {
     /**
      * Run the migrations.
