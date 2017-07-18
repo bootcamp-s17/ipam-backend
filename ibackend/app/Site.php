@@ -14,17 +14,17 @@ class Site extends Model
 
     //Specifying the join relationships
     public function subnets(){
-    	return $this->hasMany('App\Subnet');
-    };
+        return $this->hasMany('App\Subnet');
+    }
     public function equipments(){
-    	return $this->hasMany('App\Equipment');
-    };
+        return $this->hasMany('App\Equipment');
+    }
     public function notes(){
-    	return $this->hasMany('App\Note');
-    };
+        return $this->hasMany('App\Note');
+    }
     public function rooms(){
-    	return $this->hasMany('App\Room');
-    };
+        return $this->hasMany('App\Room');
+    }
 
     
 }

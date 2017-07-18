@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Sites;
+use App\Site;
 use Illuminate\Http\Request;
 
 class SitesController extends Controller
@@ -14,7 +14,7 @@ class SitesController extends Controller
      */
     public function index()
     {
-        //
+        return Site::all();    
     }
 
     /**
@@ -35,7 +35,9 @@ class SitesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $site = Site::create($request->all());
+
+        return response()->json($site,201);
     }
 
     /**
@@ -44,9 +46,12 @@ class SitesController extends Controller
      * @param  \App\Sites  $sites
      * @return \Illuminate\Http\Response
      */
-    public function show(Sites $sites)
+    public function show(Site $site)
     {
-        //
+        // var_dump($site);
+        // $site = \App\Site::create($request->where('id',$sites));
+        // return response()->json($site,200);
+        return response()->json(compact('site'));
     }
 
     /**
@@ -67,9 +72,10 @@ class SitesController extends Controller
      * @param  \App\Sites  $sites
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Sites $sites)
+    public function update(Request $request, Site $sites)
     {
-        //
+        $site->update($request->all());
+        return response()->json($site,200);
     }
 
     /**
@@ -80,6 +86,8 @@ class SitesController extends Controller
      */
     public function destroy(Sites $sites)
     {
-        //
+        $sites->delete();
+
+        return response()->json(null,204);
     }
 }
