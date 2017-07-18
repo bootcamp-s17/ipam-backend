@@ -11,15 +11,6 @@ class RoomsTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('rooms')->insert([
-            'name' => "BLM-217",
-            'site_id' => 1,
-        ]);
-
-        DB::table('rooms')->insert([
-            'name' => "BLM-114",
-            'site_id' => 1,
-        ]);
 
         DB::table('rooms')->insert([
             'name' => "BLM-114",
@@ -57,11 +48,6 @@ class RoomsTableSeeder extends Seeder
         ]);
 
          DB::table('rooms')->insert([
-            'name' => "BLM-204",
-            'site_id' => 1,
-        ]);
-
-         DB::table('rooms')->insert([
             'name' => "BLM-116",
             'site_id' => 1,
         ]);
@@ -76,64 +62,6 @@ class RoomsTableSeeder extends Seeder
             'site_id' => 1,
         ]);
 
-         DB::table('rooms')->insert([
-            'name' => "BLM-110",
-            'site_id' => 1,
-        ]);
-
-        ////////////////
-        
-        DB::table('rooms')->insert([
-            'name' => "BLM-110",
-            'site_id' => 1,
-        ]);
-
-        DB::table('rooms')->insert([
-            'name' => "BLM-110",
-            'site_id' => 1,
-        ]);
-
-        DB::table('rooms')->insert([
-            'name' => "BLM-110",
-            'site_id' => 1,
-        ]);
-
-        DB::table('rooms')->insert([
-            'name' => "BLM-110",
-            'site_id' => 1,
-        ]);
-
-        DB::table('rooms')->insert([
-            'name' => "BLM-110",
-            'site_id' => 1,
-        ]);
-
-        DB::table('rooms')->insert([
-            'name' => "BLM-110",
-            'site_id' => 1,
-        ]);
-
-        DB::table('rooms')->insert([
-            'name' => "BLM-110",
-            'site_id' => 1,
-        ]);
-
-        DB::table('rooms')->insert([
-            'name' => "BLM-110",
-            'site_id' => 1,
-        ]);
-
-        DB::table('rooms')->insert([
-            'name' => "BLM-110",
-            'site_id' => 1,
-        ]); 
-
-        ///////////
-
-        DB::table('rooms')->insert([
-            'name' => "BLM-211",
-            'site_id' => 1,
-        ]);
 
         DB::table('rooms')->insert([
             'name' => "BLM-211",
@@ -144,46 +72,6 @@ class RoomsTableSeeder extends Seeder
             'name' => "BLM-110",
             'site_id' => 1,
         ]);
-
-        DB::table('rooms')->insert([
-            'name' => "BLM-110",
-            'site_id' => 1,
-        ]);
-
-        DB::table('rooms')->insert([
-            'name' => "BLM-110",
-            'site_id' => 1,
-        ]);  
-
-        DB::table('rooms')->insert([
-            'name' => "BLM-110",
-            'site_id' => 1,
-        ]);
-
-        DB::table('rooms')->insert([
-            'name' => "BLM-110",
-            'site_id' => 1,
-        ]);
-
-        DB::table('rooms')->insert([
-            'name' => "BLM-110",
-            'site_id' => 1,
-        ]); 
-
-        DB::table('rooms')->insert([
-            'name' => "BLM-110",
-            'site_id' => 1,
-        ]);
-
-        DB::table('rooms')->insert([
-            'name' => "BLM-110",
-            'site_id' => 1,
-        ]);
-
-        DB::table('rooms')->insert([
-            'name' => "BLM-110",
-            'site_id' => 1,
-        ]); 
 
         DB::table('rooms')->insert([
             'name' => "BLM-203",
@@ -195,29 +83,6 @@ class RoomsTableSeeder extends Seeder
             'site_id' => 1,
         ]); 
 
-        DB::table('rooms')->insert([
-            'name' => "BLM-Hallway",
-            'site_id' => 1,
-        ]); 
-
-        DB::table('rooms')->insert([
-            'name' => "BLM-Hallway",
-            'site_id' => 1,
-        ]); 
-
-        DB::table('rooms')->insert([
-            'name' => "BLM-Hallway",
-            'site_id' => 1,
-        ]); 
-
-        DB::table('rooms')->insert([
-            'name' => "BLM-Hallway",
-            'site_id' => 1,
-        ]); 
-
-        DB::table('rooms')->insert([
-            'name' => "BLM-Hallway",
-            'site_id' => 1,
-        ]); 
     }
 }
+

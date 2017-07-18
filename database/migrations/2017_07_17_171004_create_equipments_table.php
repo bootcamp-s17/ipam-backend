@@ -20,8 +20,8 @@ class CreateEquipmentsTable extends Migration //added an s
         Schema::create('equipments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('type_id')->unsigned();
-            $table->foreign('type_id')->references('id')->on('equipment_types');
+            $table->integer('equipment_type_id')->unsigned();
+            $table->foreign('equipment_type_id')->references('id')->on('equipment_types');
             $table->integer('room_id')->unsigned();
             $table->foreign('room_id')->references('id')->on('rooms');
             $table->string('model');
