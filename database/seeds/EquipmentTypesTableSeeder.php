@@ -35,6 +35,14 @@ class EquipmentTypesTableSeeder extends Seeder
         DB::table('equipment_types')->insert([
             'name' => "Camera",
         ]);
+        
+        DB::table('equipment_types')->insert([
+            'name' => "Wireless Access Point",
+        ]);
+
+        DB::table('equipment_types')->insert([
+            'name' => "Other",
+        ]);
 
         DB::table('equipment_types')->insert([
             'name' => "Placeholder",

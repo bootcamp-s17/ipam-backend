@@ -22,6 +22,8 @@ class CreateEquipmentsTable extends Migration //added an s
             $table->string('name');
             $table->integer('type_id')->unsigned();
             $table->foreign('type_id')->references('id')->on('equipment_types');
+            $table->integer('room_id')->unsigned();
+            $table->foreign('room_id')->references('id')->on('rooms');
             $table->string('model');
             $table->string('driver');
             $table->string('serial_number');
@@ -40,6 +42,7 @@ class CreateEquipmentsTable extends Migration //added an s
             // $table->foreign('note_id')->refereces('id')->on('notes');
             $table->softDeletes();
             $table->timestamps();
+
 
         });
     }
