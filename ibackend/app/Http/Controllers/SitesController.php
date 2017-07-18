@@ -14,7 +14,15 @@ class SitesController extends Controller
      */
     public function index()
     {
-        return \App\Site::all();    
+        
+        $sites = \App\Site::all(); 
+        foreach($sites as $site){
+            
+            $subnets = $site->subnets()->get();
+            
+            $site['subnets'] = $subnets;
+        }
+        return $sites;    
     }
 
     /**
@@ -48,6 +56,15 @@ class SitesController extends Controller
      */
     public function show(Site $sites)
     {
+        // foreach($sites as $site){
+        //     dd($site->subnets()->get());
+        //     $subnets = $site->subnets()->get();
+        //     dd($subnets);
+        //     $site['subnets'] = $subnets;
+        // }
+        $subnets = $sites->subnets()->get();
+        // dd($subnets);
+        $sites['subnets'] = $subnets;
         return $sites;
     }
 

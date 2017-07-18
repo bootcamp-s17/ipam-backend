@@ -13,7 +13,7 @@ class Subnet extends Model
     protected $dates = ['deleted_at'];
 
     //Specifying the join relationships
-    public function sites(){
+    public function site(){
         return $this->belongsTo('App\Site');
     }
     public function notes(){
