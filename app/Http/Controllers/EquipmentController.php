@@ -14,7 +14,14 @@ class EquipmentController extends Controller
      */
     public function index()
     {
-        //
+        $equipments = \App\Equipment::all();
+
+        foreach ($equipments as $equipment) {
+            $equipment['site'] = $equipment->site()->get();
+            $equipment['type'] = $equipment->equipment_type()->get();
+        }
+
+        return $equipments;
     }
 
     /**

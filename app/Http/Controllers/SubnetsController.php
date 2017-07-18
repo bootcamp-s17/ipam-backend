@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Subnets;
+use App\Subnet;
 use Illuminate\Http\Request;
 
 class SubnetsController extends Controller
@@ -14,7 +14,14 @@ class SubnetsController extends Controller
      */
     public function index()
     {
-        //
+        $subnets = \App\Subnet::all();
+        
+        foreach ($subnets as $subnet) {
+            $subnet['site']= $subnet->site()->get();
+            
+        }
+
+        return $subnets;
     }
 
     /**
@@ -35,7 +42,9 @@ class SubnetsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+         $subnet = \App\Subnet::create($request->all());
+
+        return response()->json($site,201);
     }
 
     /**
@@ -44,9 +53,10 @@ class SubnetsController extends Controller
      * @param  \App\Subnets  $subnets
      * @return \Illuminate\Http\Response
      */
-    public function show(Subnets $subnets)
+    public function show(Subnet $subnets)
     {
-        //
+        $subnets['site'] = $subnets->site()->get();
+        return $subnets;
     }
 
     /**
@@ -55,7 +65,7 @@ class SubnetsController extends Controller
      * @param  \App\Subnets  $subnets
      * @return \Illuminate\Http\Response
      */
-    public function edit(Subnets $subnets)
+    public function edit(Subnet $subnets)
     {
         //
     }
@@ -67,9 +77,10 @@ class SubnetsController extends Controller
      * @param  \App\Subnets  $subnets
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Subnets $subnets)
+    public function update(Request $request, Subnet $subnets)
     {
-        //
+        $subnet->update($request->all());
+        return response()->json($subnet,200);
     }
 
     /**
@@ -78,8 +89,10 @@ class SubnetsController extends Controller
      * @param  \App\Subnets  $subnets
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Subnets $subnets)
+    public function destroy(Subnet $subnets)
     {
-        //
+        $sites->delete();
+
+        return response()->json(null,204);
     }
 }

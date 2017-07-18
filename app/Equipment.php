@@ -13,15 +13,15 @@ class Equipment extends Model
     protected $dates = ['deleted_at'];
 
     //Specifying the join relationships
-    public function equipment_types(){
-    	return $this->belongsTo('App\Equipment_Type');
+    public function equipment_type(){
+        return $this->belongsTo('App\Equipment_Type');
     };
 
     public function notes(){
-    	return $this->hasMany('App\Note');
+        return $this->hasMany('App\Note');
     };
-    public function sites(){
-    	return $this->belongsTo('App\Site');
+    public function site(){
+        return $this->belongsTo('App\Site');
     };
 
 

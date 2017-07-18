@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Sites;
+use App\Site;
 use Illuminate\Http\Request;
 
 class SitesController extends Controller
@@ -14,7 +14,15 @@ class SitesController extends Controller
      */
     public function index()
     {
-        //
+        
+        $sites = \App\Site::all(); 
+        foreach($sites as $site){
+            
+            $subnets = $site->subnets()->get();
+            
+            $site['subnets'] = $subnets;
+        }
+        return $sites;    
     }
 
     /**
@@ -35,7 +43,9 @@ class SitesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $site = \App\Site::create($request->all());
+
+        return response()->json($site,201);
     }
 
     /**
@@ -44,9 +54,18 @@ class SitesController extends Controller
      * @param  \App\Sites  $sites
      * @return \Illuminate\Http\Response
      */
-    public function show(Sites $sites)
+    public function show(Site $sites)
     {
-        //
+        // foreach($sites as $site){
+        //     dd($site->subnets()->get());
+        //     $subnets = $site->subnets()->get();
+        //     dd($subnets);
+        //     $site['subnets'] = $subnets;
+        // }
+        $subnets = $sites->subnets()->get();
+        // dd($subnets);
+        $sites['subnets'] = $subnets;
+        return $sites;
     }
 
     /**
@@ -69,7 +88,8 @@ class SitesController extends Controller
      */
     public function update(Request $request, Sites $sites)
     {
-        //
+        $site->update($request->all());
+        return response()->json($site,200);
     }
 
     /**
@@ -80,6 +100,8 @@ class SitesController extends Controller
      */
     public function destroy(Sites $sites)
     {
-        //
+        $sites->delete();
+
+        return response()->json(null,204);
     }
 }
