@@ -14,7 +14,7 @@ class SitesController extends Controller
      */
     public function index()
     {
-        return Site::all();    
+        return \App\Site::all();    
     }
 
     /**
@@ -35,7 +35,7 @@ class SitesController extends Controller
      */
     public function store(Request $request)
     {
-        $site = Site::create($request->all());
+        $site = \App\Site::create($request->all());
 
         return response()->json($site,201);
     }
@@ -46,12 +46,9 @@ class SitesController extends Controller
      * @param  \App\Sites  $sites
      * @return \Illuminate\Http\Response
      */
-    public function show(Site $site)
+    public function show(Site $sites)
     {
-        // var_dump($site);
-        // $site = \App\Site::create($request->where('id',$sites));
-        // return response()->json($site,200);
-        return response()->json(compact('site'));
+        return $sites;
     }
 
     /**
@@ -72,7 +69,7 @@ class SitesController extends Controller
      * @param  \App\Sites  $sites
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Site $sites)
+    public function update(Request $request, Sites $sites)
     {
         $site->update($request->all());
         return response()->json($site,200);

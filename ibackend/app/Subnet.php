@@ -12,12 +12,12 @@ class Subnet extends Model
 
     protected $dates = ['deleted_at'];
 
-	//Specifying the join relationships
-    public function site(){
-    	return $this->belongsTo('App\Site');
-    };
+    //Specifying the join relationships
+    public function sites(){
+        return $this->belongsTo('App\Site');
+    }
     public function notes(){
-    	return $this->hasMany('App\Note');
-    };
+        return $this->hasMany('App\Note');
+    }
    
 }

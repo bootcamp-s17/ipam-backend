@@ -18,21 +18,21 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('sites', 'SitesController@index');
-Route::get('sites/{id}', 'SitesController@show');
+Route::get('sites/{sites}', 'SitesController@show');
 Route::post('sites', 'SitesController@store');
-Route::put('sites/{id}', 'SitesController@update');
-Route::delete('sites/{id}', 'SitesController@delete');
+Route::put('sites/{sites}', 'SitesController@update');
+Route::delete('sites/{sites}', 'SitesController@delete');
 
 
 Route::get('subnets', 'SubnetsController@index');
-Route::get('subnets/{id}', 'SubnetsController@show');
+Route::get('subnets/{subnets}', 'SubnetsController@show');
 Route::post('subnets', 'SubnetsController@store');
-Route::put('subnets/{id}', 'SubnetsController@update');
-Route::delete('subnets/{id}', 'SubnetsController@delete');
+Route::put('subnets/{subnets}', 'SubnetsController@update');
+Route::delete('subnets/{subnets}', 'SubnetsController@delete');
 
 
 Route::get('equipment', 'EquipmentController@index');
-Route::get('equipment/{id}', 'EquipmentController@show');
+Route::get('equipment/{equipment}', 'EquipmentController@show');
 Route::post('equipment', 'EquipmentController@store');
-Route::put('equipment/{id}', 'EquipmentController@update');
-Route::delete('equipment/{id}', 'EquipmentController@delete');
+Route::put('equipment/{equipment}', 'EquipmentController@update');
+Route::delete('equipment/{equipment}', 'EquipmentController@delete');

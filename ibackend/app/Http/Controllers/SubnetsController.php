@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Subnets;
+use App\Subnet;
 use Illuminate\Http\Request;
 
 class SubnetsController extends Controller
@@ -14,7 +14,7 @@ class SubnetsController extends Controller
      */
     public function index()
     {
-        //
+        return \App\Subnet::all();
     }
 
     /**
@@ -44,9 +44,9 @@ class SubnetsController extends Controller
      * @param  \App\Subnets  $subnets
      * @return \Illuminate\Http\Response
      */
-    public function show(Subnets $subnets)
+    public function show(Subnet $subnets)
     {
-        //
+        return $subnets;
     }
 
     /**
