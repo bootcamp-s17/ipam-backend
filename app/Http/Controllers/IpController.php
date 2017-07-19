@@ -49,11 +49,11 @@ class IpController extends Controller
 
         //Query the subnets table for the given id
         //This returns an array
-        $subnet = Subnet::find($subnet_id)->subnet_address;
+        $subnet_specific = Subnet::find($subnet_id)->subnet_address;
 
         //Extracts first 3 number fields of subnet address
         //Pop removes the last element of the given array
-        $subnet_array = explode('.', $subnet);
+        $subnet_array = explode('.', $subnet_specific);
         array_pop($subnet_array);
 
         //Implode takes the array and turns it back into a string.
@@ -89,7 +89,54 @@ class IpController extends Controller
     }
 
     public function check($subnet_id, $new_ip_address){
-        return $new_ip_address;
+        // return $new_ip_address;
+
+        //Use the index function declared on line 16
+        //Within this function. 
+        $ip_addresses = $this->index()->toArray();
+        $subnets = Subnet::all()->pluck('subnet_address')->toArray();
+
+        $all_addresses = array_merge($ip_addresses, $subnets);
+
+        //Query the subnets table for the given id
+        //This returns an array
+        $subnet_specific = Subnet::find($subnet_id)->subnet_address;
+
+        //Extracts first 3 number fields of subnet address
+        //Pop removes the last element of the given array
+        $subnet_array = explode('.', $subnet_specific);
+        array_pop($subnet_array);
+
+        //Implode takes the array and turns it back into a string.
+        $subnet_str = implode('.', $subnet_array);
+
+        //Length of the string we are reviewing 
+        $charNum = count($subnet_str);
+
+        //Creating array of subnets that are in use
+        $inRange =array();
+
+        //This loops through the ip addresses given by @index
+        //and checks those that match the given subnet address 
+        foreach ($all_addresses as $address){
+
+            $ip_substr = substr($address, 0, 9);
+
+
+            if ($ip_substr === $subnet_str){
+
+                array_push($inRange, $address);
+            }
+        }
+        if (!in_array($new_ip_address, $inRange)){
+                return 'True';
+            }
+            else {
+                return 'False';
+
+            }
+
+
 
     }
 
