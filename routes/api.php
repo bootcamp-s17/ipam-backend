@@ -39,6 +39,8 @@ Route::delete('equipment/{equipments}', 'EquipmentController@delete');
 
 Route::get('ip', 'IpController@index');
 Route::get('ip/{subnet_id}/next', 'IpController@next');
+Route::get('ip/{subnet_id}/check/{new_ip_address}', 'IpController@check');
+
 
 
 

@@ -88,6 +88,11 @@ class IpController extends Controller
         }
     }
 
+    public function check($subnet_id, $new_ip_address){
+        return $new_ip_address;
+
+    }
+
     /**
      * Display the specified resource.
      *
