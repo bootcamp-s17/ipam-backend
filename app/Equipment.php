@@ -17,7 +17,7 @@ class Equipment extends Model
     public function equipment_type(){
         return $this->belongsTo('App\EquipmentType');
     }
-4
+
     public function notes(){
         return $this->hasMany('App\Note');
     }
