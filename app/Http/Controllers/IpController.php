@@ -89,15 +89,7 @@ class IpController extends Controller
     }
 
     public function check($subnet_id, $new_ip_address){
-        // return $new_ip_address;
-
-        //Use the index function declared on line 16
-        //Within this function. 
-        $ip_addresses = $this->index()->toArray();
-        $subnets = Subnet::all()->pluck('subnet_address')->toArray();
-
-        $all_addresses = array_merge($ip_addresses, $subnets);
-
+      
         //Query the subnets table for the given id
         //This returns an array
         $subnet_specific = Subnet::find($subnet_id)->subnet_address;
@@ -118,7 +110,7 @@ class IpController extends Controller
 
         //This loops through the ip addresses given by @index
         //and checks those that match the given subnet address 
-        foreach ($all_addresses as $address){
+        foreach ($this->get_addresses() as $address){
 
             $ip_substr = substr($address, 0, 9);
 
@@ -135,9 +127,16 @@ class IpController extends Controller
                 return 'False';
 
             }
+    }
+    public function get_addresses(){
+        // return $new_ip_address;
 
+        //Use the index function declared on line 16
+        //Within this function. 
+        $ip_addresses = $this->index()->toArray();
+        $subnets = Subnet::all()->pluck('subnet_address')->toArray();
 
-
+        return array_merge($ip_addresses, $subnets);
     }
 
     /**
