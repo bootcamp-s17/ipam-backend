@@ -77,8 +77,6 @@ class IpController extends Controller
                 array_push($inRange, $ip_address);
             }
         }
-
-
         //creates next ip address available and returns it
         for ($i = 1; $i < 255; $i ++){
 
@@ -88,8 +86,6 @@ class IpController extends Controller
                 return $next;
             }
         }
-
-
     }
 
     /**
