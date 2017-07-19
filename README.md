@@ -13,6 +13,9 @@
 (6) Git branching
 
 
+## Running Backend on Port 7000
+php artisan serve --port=7000
+
 # IPAM - Backend instructions.
 
 - Clone repository to you computer
@@ -29,3 +32,4 @@
 	- Generate APP_KEY by typing "php artisan key:generate"
 - $ php artisan migrate
 - $ php artisan db:seed
+
