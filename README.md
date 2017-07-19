@@ -11,3 +11,6 @@
 (4) Data validation
 (5) Data Storage format
 (6) Git branching
+
+## Running Backend on Port 7000
+php artisan serve --port=7000
