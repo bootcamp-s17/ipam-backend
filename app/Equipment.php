@@ -14,16 +14,17 @@ class Equipment extends Model
 
     //Specifying the join relationships
     public function equipment_type(){
-        return $this->belongsTo('App\Equipment_Type');
-    };
+        return $this->belongsTo('App\EquipmentType');
+    }
 
     public function notes(){
         return $this->hasMany('App\Note');
-    };
+    }
     public function site(){
         return $this->belongsTo('App\Site');
-    };
+    }
 
+    protected $table = 'equipments';
 
 }
 

@@ -36,3 +36,13 @@ Route::get('equipment/{equipments}', 'EquipmentController@show');
 Route::post('equipment', 'EquipmentController@store');
 Route::put('equipment/{equipments}', 'EquipmentController@update');
 Route::delete('equipment/{equipments}', 'EquipmentController@delete');
+
+Route::get('ip', 'IpController@index');
+Route::get('ip/{subnet_id}/next', 'IpController@next');
+
+
+
+
+
+
+
