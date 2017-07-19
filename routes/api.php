@@ -32,7 +32,7 @@ Route::delete('subnets/{subnets}', 'SubnetsController@delete');
 
 
 Route::get('equipment', 'EquipmentController@index');
-Route::get('equipment/{equipments}', 'EquipmentController@show');
+Route::get('equipment/{equipment}', 'EquipmentController@show');
 Route::post('equipment', 'EquipmentController@store');
-Route::put('equipment/{equipments}', 'EquipmentController@update');
-Route::delete('equipment/{equipments}', 'EquipmentController@delete');
+Route::put('equipment/{equipment}', 'EquipmentController@update');
+Route::delete('equipment/{equipment}', 'EquipmentController@delete');

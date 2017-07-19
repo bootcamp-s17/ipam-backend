@@ -11,18 +11,19 @@ class Equipment extends Model
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
-
+    protected $table = 'equipments';
     //Specifying the join relationships
+    
     public function equipment_type(){
-        return $this->belongsTo('App\Equipment_Type');
-    };
-
+        return $this->belongsTo('App\EquipmentType');
+    }
+4
     public function notes(){
         return $this->hasMany('App\Note');
-    };
+    }
     public function site(){
         return $this->belongsTo('App\Site');
-    };
+    }
 
 
 }

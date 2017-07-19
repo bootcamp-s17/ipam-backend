@@ -44,7 +44,7 @@ class SubnetsController extends Controller
     {
          $subnet = \App\Subnet::create($request->all());
 
-        return response()->json($site,201);
+        return response()->json($equipment,201);
     }
 
     /**
@@ -91,7 +91,7 @@ class SubnetsController extends Controller
      */
     public function destroy(Subnet $subnets)
     {
-        $sites->delete();
+        $subnets->delete();
 
         return response()->json(null,204);
     }
