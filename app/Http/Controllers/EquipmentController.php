@@ -42,7 +42,9 @@ class EquipmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $equipment = \App\Equipment::create($request->all());
+
+        return response()->json($equipment,201);
     }
 
     /**
@@ -53,7 +55,9 @@ class EquipmentController extends Controller
      */
     public function show(Equipment $equipment)
     {
-        //
+        $equipment['type'] = $equipment->equipment_type()->get();
+        $equipment['site'] = $equipment->site()->get();
+        return $equipment;
     }
 
     /**
@@ -76,7 +80,8 @@ class EquipmentController extends Controller
      */
     public function update(Request $request, Equipment $equipment)
     {
-        //
+        $equipment->update($request->all());
+        return response()->json($equipment,200);
     }
 
     /**
@@ -87,6 +92,8 @@ class EquipmentController extends Controller
      */
     public function destroy(Equipment $equipment)
     {
-        //
+        $equipment->delete();
+
+        return response()->json(null,204);
     }
 }
