@@ -43,7 +43,14 @@ class SitesController extends Controller
      */
     public function store(Request $request)
     {
-        $site = \App\Site::create($request->all());
+        // $site = \App\Site::create($request->all());
+        $site = new \App\Site;
+        $site->name = $request->input('name');
+        $site->address = $request->input('address');
+        $site->abbreviation = $request->input('abbreviation');
+        $site->site_contact = $request->input('site_contact');
+        $site->save();
+
 
         return response()->json($site,201);
     }
