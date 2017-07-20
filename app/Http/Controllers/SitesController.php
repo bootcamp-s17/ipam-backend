@@ -16,12 +16,6 @@ class SitesController extends Controller
     {
         
         $sites = \App\Site::all(); 
-        foreach($sites as $site){
-            
-            $subnets = $site->subnets()->get();
-            
-            $site['subnets'] = $subnets;
-        }
         return $sites;    
     }
 
@@ -43,9 +37,15 @@ class SitesController extends Controller
      */
     public function store(Request $request)
     {
-        $site = \App\Site::create($request->all());
+        $site = new \App\Site;
+        $site->name = $request->input('name');
+        $site->address = $request->input('address');
+        $site->abbreviation = $request->input('abbreviation');
+        $site->site_contact = $request->input('site_contact');
+        $site->save();
 
-        return response()->json($site,201);
+
+        return redirect()->route('test');
     }
 
     /**
@@ -65,7 +65,8 @@ class SitesController extends Controller
         $subnets = $sites->subnets()->get();
         // dd($subnets);
         $sites['subnets'] = $subnets;
-        return $sites;
+        return Route('test');
+        // return $sites;
     }
 
     /**
@@ -86,10 +87,16 @@ class SitesController extends Controller
      * @param  \App\Sites  $sites
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Sites $sites)
+    public function update(Request $request, Site $sites)
     {
-        $site->update($request->all());
-        return response()->json($site,200);
+        $site = \App\Site::find($request->id);
+        $data = array("name" =>$request->name,
+            "address"=> $request->address,
+            "abbreviation" =>$request->abbreviation,
+            "site_contact" => $request->site_contact);
+        $site->fill($data);
+        $site->save();
+        return redirect()->route('test');
     }
 
     /**
@@ -98,10 +105,10 @@ class SitesController extends Controller
      * @param  \App\Sites  $sites
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Sites $sites)
+    public function destroy(Site $sites)
     {
-        $sites->delete();
-
-        return response()->json(null,204);
+        $site = \App\Site::find($sites->id);
+        $site->delete();
+        return redirect()->route('test');
     }
 }
