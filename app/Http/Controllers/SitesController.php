@@ -16,12 +16,12 @@ class SitesController extends Controller
     {
         
         $sites = \App\Site::all(); 
-        foreach($sites as $site){
+        // foreach($sites as $site){
             
-            $subnets = $site->subnets()->get();
+        //     $subnets = $site->subnets()->get();
             
-            $site['subnets'] = $subnets;
-        }
+        //     $site['subnets'] = $subnets;
+        // }
         return $sites;    
     }
 
