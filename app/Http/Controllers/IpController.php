@@ -93,11 +93,16 @@ class IpController extends Controller
         return substr($subnet_specific, 0 ,strrpos($subnet_specific, "."));
     }
     public function get_maskbit_range($subnet_id){
-
-        $maskbit = Subnet::all()->where('id', $subnet_id)->pluck('mask_bits')->first();
-
+        //Returns the mask_bit value from the Subnets table
+        $maskbit = Subnet::all()
+            ->where('id', $subnet_id)
+            ->pluck('mask_bits')
+            ->first();
+        
+        //Base maskbit number full range from 0-255 
         $base = 24;
         $increment = floor($maskbit - $base);
+        //maskbit range from 0-255 depending on maskbit difference from 24
         $range = floor(255 / (pow(2,$increment)));
 
         return $range;
