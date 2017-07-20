@@ -38,13 +38,7 @@ class SitesController extends Controller
     public function store(Request $request)
     {
         $site = new \App\Site;
-        $site->name = $request->input('name');
-        $site->address = $request->input('address');
-        $site->abbreviation = $request->input('abbreviation');
-        $site->site_contact = $request->input('site_contact');
-        $site->save();
-
-
+        $site->fill($request->all())->save();
         return redirect()->route('test');
     }
 
@@ -56,17 +50,9 @@ class SitesController extends Controller
      */
     public function show(Site $sites)
     {
-        // foreach($sites as $site){
-        //     dd($site->subnets()->get());
-        //     $subnets = $site->subnets()->get();
-        //     dd($subnets);
-        //     $site['subnets'] = $subnets;
-        // }
         $subnets = $sites->subnets()->get();
-        // dd($subnets);
         $sites['subnets'] = $subnets;
         return Route('test');
-        // return $sites;
     }
 
     /**
@@ -90,12 +76,7 @@ class SitesController extends Controller
     public function update(Request $request, Site $sites)
     {
         $site = \App\Site::find($request->id);
-        $data = array("name" =>$request->name,
-            "address"=> $request->address,
-            "abbreviation" =>$request->abbreviation,
-            "site_contact" => $request->site_contact);
-        $site->fill($data);
-        $site->save();
+        $site->fill($request->all())->save();
         return redirect()->route('test');
     }
 

@@ -12,6 +12,7 @@ class Equipment extends Model
 
     protected $dates = ['deleted_at'];
     protected $table = 'equipments';
+    protected $fillable = ['name', 'equipment_type_id','model', 'driver', 'serial_number','ip_address','site_id','host_name','port_number','mac-address','mab','printer_server','printer_name','share_name','share_comment'];
     //Specifying the join relationships
     
     public function equipment_type(){

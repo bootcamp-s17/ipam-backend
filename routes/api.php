@@ -28,11 +28,11 @@ Route::get('subnets', 'SubnetsController@index');
 Route::get('subnets/{subnets}', 'SubnetsController@show');
 Route::post('subnets', 'SubnetsController@store');
 Route::put('subnets/{subnets}', 'SubnetsController@update');
-Route::delete('subnets/{subnets}', 'SubnetsController@delete');
+Route::delete('subnets/{subnets}', 'SubnetsController@destroy');
 
 
 Route::get('equipment', 'EquipmentController@index');
 Route::get('equipment/{equipment}', 'EquipmentController@show');
 Route::post('equipment', 'EquipmentController@store');
 Route::put('equipment/{equipment}', 'EquipmentController@update');
-Route::delete('equipment/{equipment}', 'EquipmentController@delete');
+Route::delete('equipment/{equipment}', 'EquipmentController@destroy');
