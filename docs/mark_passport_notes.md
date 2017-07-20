@@ -6,8 +6,9 @@ Passport is a built-in Laravel feature, built to use Oauth2, which allows a simp
 
 To learn about and setup using Passport, we essentially followed both the documentation and a video tutorial from Laracasts. These can be viewed here:
 
-Documentation: https://laravel.com/docs/5.4/passport
-Laracasts video: https://laracasts.com/series/whats-new-in-laravel-5-3/episodes/13
+Documentation: <https://laravel.com/docs/5.4/passport>
+
+Laracasts video: <https://laracasts.com/series/whats-new-in-laravel-5-3/episodes/13>
 
 ## Using Within Our Project
 
