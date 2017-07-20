@@ -42,9 +42,9 @@ class EquipmentController extends Controller
      */
     public function store(Request $request)
     {
-        $equipment = \App\Equipment::create($request->all());
-
-        return response()->json($equipment,201);
+        $equip = new \App\Equipment;
+        $equip->fill($request->all())->save();
+        return redirect()->route('test');
     }
 
     /**
@@ -80,8 +80,9 @@ class EquipmentController extends Controller
      */
     public function update(Request $request, Equipment $equipment)
     {
-        $equipment->update($request->all());
-        return response()->json($equipment,200);
+        $equip = new \App\Equipment;
+        $equip->fill($request->all())->save();
+        return redirect()->route('test');
     }
 
     /**
@@ -92,8 +93,8 @@ class EquipmentController extends Controller
      */
     public function destroy(Equipment $equipment)
     {
-        $equipment->delete();
-
-        return response()->json(null,204);
+        $equip = \App\Equipment::find($equipment->id);
+        $equip->delete();
+        return redirect()->route('test');
     }
 }
