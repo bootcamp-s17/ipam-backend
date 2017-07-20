@@ -13,7 +13,8 @@ class testing extends Controller
      */
     public function index()
     {
-        //
+        $sites = \App\Site::all();
+        return view('test', compact('sites'));
     }
 
     /**

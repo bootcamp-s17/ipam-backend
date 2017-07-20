@@ -21,7 +21,7 @@ Route::get('sites', 'SitesController@index');
 Route::get('sites/{sites}', 'SitesController@show');
 Route::post('sites', 'SitesController@store');
 Route::put('sites/{sites}', 'SitesController@update');
-Route::delete('sites/{sites}', 'SitesController@delete');
+Route::delete('sites/{sites}', 'SitesController@destroy');
 
 
 Route::get('subnets', 'SubnetsController@index');

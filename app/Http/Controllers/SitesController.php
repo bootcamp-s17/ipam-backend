@@ -52,7 +52,7 @@ class SitesController extends Controller
         $site->save();
 
 
-        return response()->json($site,201);
+        return redirect()->route('test');
     }
 
     /**
@@ -72,7 +72,8 @@ class SitesController extends Controller
         $subnets = $sites->subnets()->get();
         // dd($subnets);
         $sites['subnets'] = $subnets;
-        return $sites;
+        return Route('test');
+        // return $sites;
     }
 
     /**
@@ -93,10 +94,21 @@ class SitesController extends Controller
      * @param  \App\Sites  $sites
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Sites $sites)
+    public function update(Request $request, Site $sites)
     {
-        $site->update($request->all());
-        return response()->json($site,200);
+        // dd($sites);
+        // $id = $request->input('id');
+        $site = \App\Site::find($request->id);
+        $data = array("name" =>$request->name,
+            "address"=> $request->address,
+            "abbreviation" =>$request->abbreviation,
+            "site_contact" => $request->site_contact);
+        $site->fill($data);
+        // dd($site);
+        $site->save();
+        return redirect()->route('test');
+        // $sites->update($request->all());
+        // return response()->json($site,200);
     }
 
     /**
@@ -105,10 +117,13 @@ class SitesController extends Controller
      * @param  \App\Sites  $sites
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Sites $sites)
+    public function destroy(Site $sites)
     {
-        $sites->delete();
-
-        return response()->json(null,204);
+        // $sites->delete();
+        $site = \App\Site::find($sites->id);
+        // dd($site);
+        $site->delete();
+        return redirect()->route('test');
+        // return response()->json(null,204);
     }
 }
