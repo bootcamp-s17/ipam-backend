@@ -46,7 +46,7 @@ class IpController extends Controller
         //creates next ip address available and returns it
         for ($i = 1; $i < 255; $i ++){
 
-            $next = $this->get_subnet($subnet_id) . '.' . $i;
+            $next = $this->get_specific_subnet($subnet_id) . '.' . $i;
             
             if (!in_array($next, $this->inRange($subnet_id))){
                 return $next;
@@ -69,11 +69,12 @@ class IpController extends Controller
         foreach ($this->get_addresses() as $address){
             $ip_substr = substr($address, 0, 9);
 
-            if ($ip_substr === $this->get_subnet($subnet_id)){
+            if ($ip_substr === $this->get_specific_subnet($subnet_id)){
                 array_push($inRange, $address);
             }
+        }
         return $inRange;    
-    }
+    
    } 
 
     public function get_addresses(){
@@ -85,13 +86,24 @@ class IpController extends Controller
         return array_merge($ip_addresses, $subnets);
     }
 
-    public function get_subnet($subnet_id) {
+    public function get_specific_subnet($subnet_id) {
         //Query the subnets table for the given id
         $subnet_specific = Subnet::find($subnet_id)->subnet_address;
         // get 10.10.10 from 10.10.10.0 so everything from left of last period
         return substr($subnet_specific, 0 ,strrpos($subnet_specific, "."));
     }
+    public function get_maskbit_range($subnet_id){
 
+        $maskbit = Subnet::all()->where('id', $subnet_id)->pluck('mask_bits')->first();
+
+        $base = 24;
+        $increment = floor($maskbit - $base);
+        $range = floor(255 / (pow(2,$increment)));
+
+        return $range;
+
+    }
+    
 
     /**
      * Display the specified resource.
