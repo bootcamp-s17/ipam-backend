@@ -44,7 +44,7 @@ class IpController extends Controller
     public function next($subnet_id)
     {
         //creates next ip address available and returns it
-        for ($i = 1; $i < 255; $i ++){
+        for ($i = 1; $i < $this->get_maskbit_range($subnet_id); $i ++){
 
             $next = $this->get_specific_subnet($subnet_id) . '.' . $i;
             
