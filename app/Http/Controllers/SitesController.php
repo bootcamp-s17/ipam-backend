@@ -16,12 +16,6 @@ class SitesController extends Controller
     {
         
         $sites = \App\Site::all(); 
-        // foreach($sites as $site){
-            
-        //     $subnets = $site->subnets()->get();
-            
-        //     $site['subnets'] = $subnets;
-        // }
         return $sites;    
     }
 
@@ -43,7 +37,6 @@ class SitesController extends Controller
      */
     public function store(Request $request)
     {
-        // $site = \App\Site::create($request->all());
         $site = new \App\Site;
         $site->name = $request->input('name');
         $site->address = $request->input('address');
@@ -96,19 +89,14 @@ class SitesController extends Controller
      */
     public function update(Request $request, Site $sites)
     {
-        // dd($sites);
-        // $id = $request->input('id');
         $site = \App\Site::find($request->id);
         $data = array("name" =>$request->name,
             "address"=> $request->address,
             "abbreviation" =>$request->abbreviation,
             "site_contact" => $request->site_contact);
         $site->fill($data);
-        // dd($site);
         $site->save();
         return redirect()->route('test');
-        // $sites->update($request->all());
-        // return response()->json($site,200);
     }
 
     /**
@@ -119,11 +107,8 @@ class SitesController extends Controller
      */
     public function destroy(Site $sites)
     {
-        // $sites->delete();
         $site = \App\Site::find($sites->id);
-        // dd($site);
         $site->delete();
         return redirect()->route('test');
-        // return response()->json(null,204);
     }
 }
