@@ -9,6 +9,9 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class SitesTest extends TestCase
 {
+   use DatabaseTransactions;
+
+
     /**
      * A basic test example.
      *
@@ -17,16 +20,17 @@ class SitesTest extends TestCase
     public function testBasicTest()
     {
 
-      $response = $this->json('POST', '/sites', [
+    $response = $this->json('POST', '/api/sites', [
          'name' => 'Sally',
          'address' => '411 W Main St',
          'abbreviation' => 'SY',
          'site_contact' => 'Bob or Bill'
          ]);
-      
-      $response = $this->get('/api/sites');
-      $response->assertJson([
 
+      $response = $this->get('/api/sites');
+      $response->assertStatus(200)
+               ->assertJsonFragment([
+            'name' => 'Sally',
          ]);
     }
 }
