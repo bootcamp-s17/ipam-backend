@@ -42,7 +42,9 @@ class EquipmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $equip = new \App\Equipment;
+        $equip->fill($request->all())->save();
+        return redirect()->route('test');
     }
 
     /**
@@ -53,7 +55,9 @@ class EquipmentController extends Controller
      */
     public function show(Equipment $equipment)
     {
-        //
+        $equipment['type'] = $equipment->equipment_type()->get();
+        $equipment['site'] = $equipment->site()->get();
+        return $equipment;
     }
 
     /**
@@ -76,7 +80,9 @@ class EquipmentController extends Controller
      */
     public function update(Request $request, Equipment $equipment)
     {
-        //
+        $equip = new \App\Equipment;
+        $equip->fill($request->all())->save();
+        return redirect()->route('test');
     }
 
     /**
@@ -87,6 +93,8 @@ class EquipmentController extends Controller
      */
     public function destroy(Equipment $equipment)
     {
-        //
+        $equip = \App\Equipment::find($equipment->id);
+        $equip->delete();
+        return redirect()->route('test');
     }
 }

@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Subnet;
 use Illuminate\Http\Request;
 
-class SubnetsController extends Controller
+class testing extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,14 +13,8 @@ class SubnetsController extends Controller
      */
     public function index()
     {
-        $subnets = \App\Subnet::all();
-        
-        foreach ($subnets as $subnet) {
-            $subnet['site']= $subnet->site()->get();
-            
-        }
-
-        return $subnets;
+        $sites = \App\Site::all();
+        return view('test', compact('sites'));
     }
 
     /**
@@ -42,30 +35,27 @@ class SubnetsController extends Controller
      */
     public function store(Request $request)
     {
-         $subnet = \App\Subnet::create($request->all());
-
-        return response()->json($equipment,201);
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Subnets  $subnets
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Subnet $subnets)
+    public function show($id)
     {
-        $subnets['site'] = $subnets->site()->get();
-        return $subnets;
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Subnets  $subnets
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Subnet $subnets)
+    public function edit($id)
     {
         //
     }
@@ -74,25 +64,22 @@ class SubnetsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Subnets  $subnets
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Subnet $subnets)
+    public function update(Request $request, $id)
     {
-        $subnet->update($request->all());
-        return response()->json($subnet,200);
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Subnets  $subnets
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Subnet $subnets)
+    public function destroy($id)
     {
-        $subnets->delete();
-
-        return response()->json(null,204);
+        //
     }
 }
