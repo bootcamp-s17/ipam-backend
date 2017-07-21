@@ -30,6 +30,8 @@ php artisan serve --port=7000
 	- Set DB_DATABASE, DB_USERNAME, DB_PASSWORD and DB_CONNECTION to "ipam_back"
 	- Set port to 5432. 
 	- Generate APP_KEY by typing "php artisan key:generate"
+- $ composer update
+- $ npm install   
 - $ php artisan migrate
 - $ php artisan db:seed
 
