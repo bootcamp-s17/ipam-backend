@@ -11,6 +11,7 @@ class Subnet extends Model
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
+    protected $fillable = ['name', 'site_id','subnet_address', 'mask_bits', 'vLan'];
 
     //Specifying the join relationships
     public function site(){

@@ -42,9 +42,14 @@ class SubnetsController extends Controller
      */
     public function store(Request $request)
     {
-         $subnet = \App\Subnet::create($request->all());
 
-        return response()->json($equipment,201);
+        $subnet = new \App\Subnet;
+        $subnet->fill($request->all())->save();
+        return redirect()->route('testingmark');
+
+        //  $subnet = \App\Subnet::create($request->all());
+
+        // return response()->json($equipment,201);
     }
 
     /**
@@ -79,8 +84,12 @@ class SubnetsController extends Controller
      */
     public function update(Request $request, Subnet $subnets)
     {
-        $subnet->update($request->all());
-        return response()->json($subnet,200);
+        // $subnet->update($request->all());
+        // return response()->json($subnet,200);
+
+        $subnet = \App\Subnet::find($request->id);
+        $subnet->fill($request->all())->save();
+        return redirect()->route('testingmark');
     }
 
     /**
@@ -91,8 +100,12 @@ class SubnetsController extends Controller
      */
     public function destroy(Subnet $subnets)
     {
-        $subnets->delete();
 
-        return response()->json(null,204);
+        $subnet = \App\Site::find($subnets->id);
+        $subnet->delete();
+        return redirect()->route('testingmark');
+        // $subnets->delete();
+
+        // return response()->json(null,204);
     }
 }
