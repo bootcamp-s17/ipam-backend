@@ -101,7 +101,7 @@ class SubnetsController extends Controller
     public function destroy(Subnet $subnets)
     {
 
-        $subnet = \App\Site::find($subnets->id);
+        $subnet = \App\Subnet::find($subnets->id);
         $subnet->delete();
         return redirect()->route('testingmark');
         // $subnets->delete();
