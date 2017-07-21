@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class ExampleTest extends TestCase
+class SitesTest extends TestCase
 {
     /**
      * A basic test example.
@@ -16,8 +16,17 @@ class ExampleTest extends TestCase
      */
     public function testBasicTest()
     {
-        $response = $this->get('/');
 
-        $response->assertStatus(200);
+      $response = $this->json('POST', '/sites', [
+         'name' => 'Sally',
+         'address' => '411 W Main St',
+         'abbreviation' => 'SY',
+         'site_contact' => 'Bob or Bill'
+         ]);
+      
+      $response = $this->get('/api/sites');
+      $response->assertJson([
+
+         ]);
     }
 }
