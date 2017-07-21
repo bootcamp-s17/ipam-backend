@@ -26,6 +26,7 @@ class Equipment extends Model
         return $this->belongsTo('App\Site');
     }
 
+    protected $table = 'equipments';
 
 }
 

@@ -36,3 +36,18 @@ Route::get('equipment/{equipment}', 'EquipmentController@show');
 Route::post('equipment', 'EquipmentController@store');
 Route::put('equipment/{equipment}', 'EquipmentController@update');
 Route::delete('equipment/{equipment}', 'EquipmentController@destroy');
+
+
+Route::get('ip', 'IpController@index');
+Route::get('ip/{subnet_id}/next', 'IpController@next');
+Route::get('ip/{subnet_id}/check/{new_ip_address}', 'IpController@check');
+Route::get('ip/{subnet_id}', 'IpController@get_maskbit_range');
+
+
+
+
+
+
+
+
+
