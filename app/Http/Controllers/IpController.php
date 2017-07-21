@@ -55,13 +55,23 @@ class IpController extends Controller
     }
 
     public function check($subnet_id, $new_ip_address){
-        if (!in_array($new_ip_address, $this->inRange($subnet_id))){
+        $me = explode('.', $new_ip_address);
+        
+        if (array_pop($me) <= $this->get_maskbit_range($subnet_id)){
+            if (!in_array($new_ip_address, $this->inRange($subnet_id))){
+                
+                var_dump($this->inRange($subnet_id));
                 return 'True';
             }
             else {
                 return 'False';
             }
-    }
+
+        } else{
+            return 'False, the new ip address you are attempting to enter is outside of the dictated maskbit range. Sorry bro';
+        }
+
+        }
 
     public function inRange($subnet_id){
         $inRange = array();
@@ -74,8 +84,17 @@ class IpController extends Controller
             }
         }
         return $inRange;    
-    
-   } 
+   }
+   public function robbie(){
+        $ip_addresses = $this->index()->toArray();
+        // get all subnet addresses from subnets
+        $subnets = Subnet::all()->pluck('subnet_address')->toArray();
+        // merge arrays together into one bank of ip addresses
+       var_dump(array_merge($ip_addresses, $subnets));
+
+
+   }
+
 
     public function get_addresses(){
         // get all ip addresses from equipment 
@@ -84,6 +103,7 @@ class IpController extends Controller
         $subnets = Subnet::all()->pluck('subnet_address')->toArray();
         // merge arrays together into one bank of ip addresses
         return array_merge($ip_addresses, $subnets);
+        
     }
 
     public function get_specific_subnet($subnet_id) {
@@ -92,12 +112,14 @@ class IpController extends Controller
         // get 10.10.10 from 10.10.10.0 so everything from left of last period
         return substr($subnet_specific, 0 ,strrpos($subnet_specific, "."));
     }
+
     public function get_maskbit_range($subnet_id){
         //Returns the mask_bit value from the Subnets table
         $maskbit = Subnet::all()
             ->where('id', $subnet_id)
             ->pluck('mask_bits')
             ->first();
+
         
         //Base maskbit number full range from 0-255 
         $base = 24;
