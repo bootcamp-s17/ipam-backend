@@ -41,8 +41,8 @@ Route::delete('equipment/{equipment}', 'EquipmentController@destroy');
 Route::get('ip', 'IpController@index');
 Route::get('ip/{subnet_id}/next', 'IpController@next');
 Route::get('ip/{subnet_id}/check/{new_ip_address}', 'IpController@check');
-Route::get('ip/{subnet_id}', 'IpController@get_maskbit_range');
-Route::get('ip/robbie/test', 'IpController@robbie');
+Route::get('ip/{subnet_id}', 'IpController@ips_in_subnet');
+
 
 
 

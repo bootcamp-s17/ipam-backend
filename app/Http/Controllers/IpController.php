@@ -85,15 +85,7 @@ class IpController extends Controller
         }
         return $inRange;    
    }
-   public function robbie(){
-        $ip_addresses = $this->index()->toArray();
-        // get all subnet addresses from subnets
-        $subnets = Subnet::all()->pluck('subnet_address')->toArray();
-        // merge arrays together into one bank of ip addresses
-       var_dump(array_merge($ip_addresses, $subnets));
-
-
-   }
+   
 
 
     public function get_addresses(){
@@ -119,8 +111,6 @@ class IpController extends Controller
             ->where('id', $subnet_id)
             ->pluck('mask_bits')
             ->first();
-
-        
         //Base maskbit number full range from 0-255 
         $base = 24;
         $increment = floor($maskbit - $base);
@@ -128,7 +118,15 @@ class IpController extends Controller
         $range = floor(255 / (pow(2,$increment)));
 
         return $range;
+    }
 
+    public function ips_in_subnet($subnet_id){
+
+        $ips = Equipment::all()
+            ->where('subnet_id', $subnet_id)
+            ->pluck('ip_address')
+            ->toArray();
+        return $ips;
     }
     
 
