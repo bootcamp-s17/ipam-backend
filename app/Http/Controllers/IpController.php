@@ -43,13 +43,21 @@ class IpController extends Controller
 
     public function next($subnet_id)
     {
+
         //creates next ip address available and returns it
         for ($i = 1; $i < $this->get_maskbit_range($subnet_id); $i ++){
 
+            //Creates an array that has the unavailable ip addresses
+            $unavailable = array_merge($this->ips_in_subnet($subnet_id),$this->inRange($subnet_id));
+
+            //Concats the next available ipaddress
             $next = $this->get_specific_subnet($subnet_id) . '.' . $i;
-            
-            if (!in_array($next, $this->inRange($subnet_id))){
+        
+            if (!in_array($next,$unavailable)){
                 return $next;
+            }
+            else {
+                return "This ip address ($next) lives within this subnet. You should not use this";
             }
         }
     }
@@ -60,11 +68,10 @@ class IpController extends Controller
         if (array_pop($me) <= $this->get_maskbit_range($subnet_id)){
             if (!in_array($new_ip_address, $this->inRange($subnet_id))){
                 
-                var_dump($this->inRange($subnet_id));
-                return 'True';
+                return 'True, the new ip address entered is within the maskbit range, and not in use';
             }
             else {
-                return 'False';
+                return 'False, the new ip address entered is within the maskbit range, but already in use';
             }
 
         } else{
@@ -116,7 +123,7 @@ class IpController extends Controller
         $increment = floor($maskbit - $base);
         //maskbit range from 0-255 depending on maskbit difference from 24
         $range = floor(255 / (pow(2,$increment)));
-
+        var_dump($range);
         return $range;
     }
 
