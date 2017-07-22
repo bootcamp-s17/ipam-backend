@@ -28,8 +28,11 @@ class CreateEquipmentsTable extends Migration //added an s
             $table->string('driver')->nullable();
             $table->string('serial_number')->nullable();
             $table->ipAddress('ip_address');
-            $table->integer('site_id')->unsigned();
-            $table->foreign('site_id')->references('id')->on('sites');
+            // $table->integer('site_id')->unsigned();
+            // $table->foreign('site_id')->references('id')->on('sites');
+            $table->integer('subnet_id')->unsigned();
+            $table->foreign('subnet_id')->references('id')->on('subnets');
+            
             $table->string('host_name')->nullable();
             $table->integer('port_number')->nullable();
             $table->macAddress('mac_address');
