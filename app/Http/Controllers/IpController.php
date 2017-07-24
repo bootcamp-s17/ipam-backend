@@ -68,30 +68,43 @@ class IpController extends Controller
     public function check($subnet_id, $new_ip_address){
         //Saving the value of the last digit
         $last_digit_array = explode('.', $new_ip_address);
-        $last_digit = array_pop($last_digit_array);
+        $last_digit = intval(array_pop($last_digit_array));
+        // var_dump($last_digit);
 
         //Saving the value of the specific subnet
         $new_ip_subnet = substr($new_ip_address, 0, 9);
         // var_dump($new_ip_subnet);
 
-        $blah = $this->in_subnet_range($subnet_id);
-        var_dump($blah);
-
         $subnet_specific = Subnet::find($subnet_id)->subnet_address;
         $subnet_specific_array = explode('.', $subnet_specific);
         $subnet_specific_range = intval(array_pop($subnet_specific_array));
+        // var_dump($subnet_specific_range);
+
+
+        $maskbit_max = intval($subnet_specific_range + ($this->get_maskbit_range($subnet_id)));
+        // var_dump($maskbit_max);
 
         if ($new_ip_subnet === $this->get_specific_subnet($subnet_id)){
-            if (($last_digit > $subnet_specific_range) && ($last_digit <= ($subnet_specific_range + ($this->get_maskbit_range($subnet_id))))){
+            if ($last_digit > $subnet_specific_range && $last_digit <= $maskbit_max){
                 if (!in_array($new_ip_address, $this->in_subnet_range($subnet_id))){
                     return 'True, the requested ip address is within the maskbit range, and is not currently in use';
                 }
                 else {
-                    return 'False, the requested ip address is already in use';
+                    $equipment_name = Equipment::all()
+                        ->where('ip_address', $new_ip_address)
+                        ->pluck('name');
+                    // var_dump($equipment_name);
+
+                     $equipment_serial = Equipment::all()
+                        ->where('ip_address', $new_ip_address)
+                        ->pluck('serial_number');
+                    // var_dump($equipment_serial);
+
+                    return 'False, the requested ip address is currently being used by the equipment with name: ' . $equipment_name . ' and serial#: ' . $equipment_serial;
                 }
             }
             else {
-                return 'False, the requested ip address is outside of the given maskbit range for the specified subnet address, the new ip address should end wit: ' . ;
+                return 'False, the requested ip address is outside of the given maskbit range for the specified subnet address, the new ip address should end with anything between ' . $subnet_specific_range . ' and ' . ($subnet_specific_range + ($this->get_maskbit_range($subnet_id)));
             }
         }
         else {
