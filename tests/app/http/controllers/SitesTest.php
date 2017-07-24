@@ -74,7 +74,6 @@ class SitesTest extends TestCase
         $this->assertSoftDeleted('sites', [
                 'id' => $response,
             ]);
-
     }
 
 }
