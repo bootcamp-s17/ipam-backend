@@ -24,6 +24,23 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->define(App\Note::class, function (Faker\Generator $faker) {
+    static $password;
+    $models = array(
+      'App\Site',
+      'App\Subnet',
+      'App\Equipments',
+      'App\Room',
+      );
+    return [
+        'text' => $faker->text,
+        'user_id' => rand(1,10),
+        'noteable_id' => rand(1,8),
+        'noteable_type' => $models[rand(0,3)],
+    ];
+});
+
+
 
 
 
