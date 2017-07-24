@@ -43,70 +43,138 @@ class IpController extends Controller
 
     public function next($subnet_id)
     {
-        //creates next ip address available and returns it
-        for ($i = 1; $i < $this->get_maskbit_range($subnet_id); $i ++){
 
+        $subnet_specific = Subnet::find($subnet_id)->subnet_address;
+        $subnet_specific_array = explode('.', $subnet_specific);
+        $subnet_specific_range = intval(array_pop($subnet_specific_array));
+        // var_dump($subnet_specific_range);
+
+        //creates next ip address available and returns it
+        for ($i = $subnet_specific_range; $i <= ($subnet_specific_range + ($this->get_maskbit_range($subnet_id))); $i ++){
+
+            //Creates an array that has the unavailable ip addresses for the given subnet id
+            $unavailable = $this->in_subnet_range($subnet_id);
+            // var_dump($unavailable);
+
+            //Concats the next available ip address
             $next = $this->get_specific_subnet($subnet_id) . '.' . $i;
-            
-            if (!in_array($next, $this->inRange($subnet_id))){
+        
+            if (!in_array($next,$unavailable)){
                 return $next;
             }
         }
     }
 
     public function check($subnet_id, $new_ip_address){
-        if (!in_array($new_ip_address, $this->inRange($subnet_id))){
-                return 'True';
+        //Saving the value of the last digit
+        $last_digit_array = explode('.', $new_ip_address);
+        $last_digit = intval(array_pop($last_digit_array));
+        // var_dump($last_digit);
+
+        //Saving the value of the specific subnet
+        $new_ip_subnet = substr($new_ip_address, 0, 9);
+        // var_dump($new_ip_subnet);
+
+        $subnet_specific = Subnet::find($subnet_id)->subnet_address;
+        $subnet_specific_array = explode('.', $subnet_specific);
+        $subnet_specific_range = intval(array_pop($subnet_specific_array));
+        // var_dump($subnet_specific_range);
+
+
+        $maskbit_max = intval($subnet_specific_range + ($this->get_maskbit_range($subnet_id)));
+        // var_dump($maskbit_max);
+
+        if ($new_ip_subnet === $this->get_specific_subnet($subnet_id)){
+            if ($last_digit > $subnet_specific_range && $last_digit <= $maskbit_max){
+                if (!in_array($new_ip_address, $this->in_subnet_range($subnet_id))){
+                    return 'True, the requested ip address is within the maskbit range, and is not currently in use';
+                }
+                else {
+                    $equipment_name = Equipment::all()
+                        ->where('ip_address', $new_ip_address)
+                        ->pluck('name');
+                    // var_dump($equipment_name);
+
+                     $equipment_serial = Equipment::all()
+                        ->where('ip_address', $new_ip_address)
+                        ->pluck('serial_number');
+                    // var_dump($equipment_serial);
+
+                    return 'False, the requested ip address is currently being used by the equipment with name: ' . $equipment_name . ' and serial#: ' . $equipment_serial;
+                }
             }
             else {
-                return 'False';
+                return 'False, the requested ip address is outside of the given maskbit range for the specified subnet address, the new ip address should end with anything between ' . $subnet_specific_range . ' and ' . ($subnet_specific_range + ($this->get_maskbit_range($subnet_id)));
             }
+        }
+        else {
+            return 'False, the requested ip address is not within the specified subnet address, the new ip address should start with: ' . $this->get_specific_subnet($subnet_id);
+        }
     }
 
-    public function inRange($subnet_id){
+    public function in_subnet_range($subnet_id){
         $inRange = array();
 
-        foreach ($this->get_addresses() as $address){
+        foreach ($this->get_all_addresses() as $address){
             $ip_substr = substr($address, 0, 9);
 
             if ($ip_substr === $this->get_specific_subnet($subnet_id)){
                 array_push($inRange, $address);
             }
         }
-        return $inRange;    
-    
-   } 
 
-    public function get_addresses(){
+        // var_dump($inRange);
+        return $inRange;    
+   }
+   
+
+
+    public function get_all_addresses(){
         // get all ip addresses from equipment 
         $ip_addresses = $this->index()->toArray();
         // get all subnet addresses from subnets
         $subnets = Subnet::all()->pluck('subnet_address')->toArray();
         // merge arrays together into one bank of ip addresses
         return array_merge($ip_addresses, $subnets);
+        
     }
 
     public function get_specific_subnet($subnet_id) {
         //Query the subnets table for the given id
         $subnet_specific = Subnet::find($subnet_id)->subnet_address;
+        // var_dump($subnet_specific);
+
         // get 10.10.10 from 10.10.10.0 so everything from left of last period
-        return substr($subnet_specific, 0 ,strrpos($subnet_specific, "."));
+        $full_address = substr($subnet_specific, 0 ,strrpos($subnet_specific, "."));
+
+        // var_dump($full_address);
+        return $full_address;
     }
+
     public function get_maskbit_range($subnet_id){
         //Returns the mask_bit value from the Subnets table
         $maskbit = Subnet::all()
             ->where('id', $subnet_id)
             ->pluck('mask_bits')
             ->first();
-        
         //Base maskbit number full range from 0-255 
         $base = 24;
         $increment = floor($maskbit - $base);
         //maskbit range from 0-255 depending on maskbit difference from 24
         $range = floor(255 / (pow(2,$increment)));
-
         return $range;
+    }
 
+    public function ips_in_subnet($subnet_id){
+
+        //Returns all the ip addresses currently being used by the given subnet address
+        $ips = Equipment::all()
+            ->where('subnet_id', $subnet_id)
+            ->pluck('ip_address')
+            ->toArray();
+
+        // var_dump($ips);
+        return $ips;
     }
     
 
