@@ -44,58 +44,79 @@ class IpController extends Controller
     public function next($subnet_id)
     {
 
+        $subnet_specific = Subnet::find($subnet_id)->subnet_address;
+        $subnet_specific_array = explode('.', $subnet_specific);
+        $subnet_specific_range = intval(array_pop($subnet_specific_array));
+        // var_dump($subnet_specific_range);
+
         //creates next ip address available and returns it
-        for ($i = 1; $i < $this->get_maskbit_range($subnet_id); $i ++){
+        for ($i = $subnet_specific_range; $i <= ($subnet_specific_range + ($this->get_maskbit_range($subnet_id))); $i ++){
 
-            //Creates an array that has the unavailable ip addresses
-            $unavailable = array_merge($this->ips_in_subnet($subnet_id),$this->inRange($subnet_id));
+            //Creates an array that has the unavailable ip addresses for the given subnet id
+            $unavailable = $this->in_subnet_range($subnet_id);
+            // var_dump($unavailable);
 
-            //Concats the next available ipaddress
+            //Concats the next available ip address
             $next = $this->get_specific_subnet($subnet_id) . '.' . $i;
         
             if (!in_array($next,$unavailable)){
                 return $next;
             }
-            else {
-                return "This ip address ($next) lives within this subnet. You should not use this";
-            }
         }
     }
 
     public function check($subnet_id, $new_ip_address){
-        $me = explode('.', $new_ip_address);
-        
-        if (array_pop($me) <= $this->get_maskbit_range($subnet_id)){
-            if (!in_array($new_ip_address, $this->inRange($subnet_id))){
-                
-                return 'True, the new ip address entered is within the maskbit range, and not in use';
+        //Saving the value of the last digit
+        $last_digit_array = explode('.', $new_ip_address);
+        $last_digit = array_pop($last_digit_array);
+
+        //Saving the value of the specific subnet
+        $new_ip_subnet = substr($new_ip_address, 0, 9);
+        // var_dump($new_ip_subnet);
+
+        $blah = $this->in_subnet_range($subnet_id);
+        var_dump($blah);
+
+        $subnet_specific = Subnet::find($subnet_id)->subnet_address;
+        $subnet_specific_array = explode('.', $subnet_specific);
+        $subnet_specific_range = intval(array_pop($subnet_specific_array));
+
+        if ($new_ip_subnet === $this->get_specific_subnet($subnet_id)){
+            if (($last_digit > $subnet_specific_range) && ($last_digit <= ($subnet_specific_range + ($this->get_maskbit_range($subnet_id))))){
+                if (!in_array($new_ip_address, $this->in_subnet_range($subnet_id))){
+                    return 'True, the requested ip address is within the maskbit range, and is not currently in use';
+                }
+                else {
+                    return 'False, the requested ip address is already in use';
+                }
             }
             else {
-                return 'False, the new ip address entered is within the maskbit range, but already in use';
+                return 'False, the requested ip address is outside of the given maskbit range for the specified subnet address, the new ip address should end wit: ' . ;
             }
-
-        } else{
-            return 'False, the new ip address you are attempting to enter is outside of the dictated maskbit range. Sorry bro';
         }
-
+        else {
+            return 'False, the requested ip address is not within the specified subnet address, the new ip address should start with: ' . $this->get_specific_subnet($subnet_id);
         }
+    }
 
-    public function inRange($subnet_id){
+    public function in_subnet_range($subnet_id){
         $inRange = array();
 
-        foreach ($this->get_addresses() as $address){
+        foreach ($this->get_all_addresses() as $address){
             $ip_substr = substr($address, 0, 9);
 
             if ($ip_substr === $this->get_specific_subnet($subnet_id)){
                 array_push($inRange, $address);
             }
         }
+
+        // var_dump($inRange);
         return $inRange;    
    }
    
 
 
-    public function get_addresses(){
+    public function get_all_addresses(){
         // get all ip addresses from equipment 
         $ip_addresses = $this->index()->toArray();
         // get all subnet addresses from subnets
@@ -108,8 +129,13 @@ class IpController extends Controller
     public function get_specific_subnet($subnet_id) {
         //Query the subnets table for the given id
         $subnet_specific = Subnet::find($subnet_id)->subnet_address;
+        // var_dump($subnet_specific);
+
         // get 10.10.10 from 10.10.10.0 so everything from left of last period
-        return substr($subnet_specific, 0 ,strrpos($subnet_specific, "."));
+        $full_address = substr($subnet_specific, 0 ,strrpos($subnet_specific, "."));
+
+        // var_dump($full_address);
+        return $full_address;
     }
 
     public function get_maskbit_range($subnet_id){
@@ -123,16 +149,18 @@ class IpController extends Controller
         $increment = floor($maskbit - $base);
         //maskbit range from 0-255 depending on maskbit difference from 24
         $range = floor(255 / (pow(2,$increment)));
-        var_dump($range);
         return $range;
     }
 
     public function ips_in_subnet($subnet_id){
 
+        //Returns all the ip addresses currently being used by the given subnet address
         $ips = Equipment::all()
             ->where('subnet_id', $subnet_id)
             ->pluck('ip_address')
             ->toArray();
+
+        // var_dump($ips);
         return $ips;
     }
     
