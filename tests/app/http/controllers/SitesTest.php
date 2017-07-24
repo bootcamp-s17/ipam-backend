@@ -6,10 +6,13 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Support\Facades\DB;
+
+use App\Site;
 
 class SitesTest extends TestCase
 {
-   use DatabaseTransactions;
+   // use DatabaseTransactions;
 
 
     /**
@@ -17,20 +20,61 @@ class SitesTest extends TestCase
      *
      * @return void
      */
-    public function testBasicTest()
-    {
+    public function testStoreSites(){
 
-    $response = $this->json('POST', '/api/sites', [
-         'name' => 'Sally',
-         'address' => '411 W Main St',
-         'abbreviation' => 'SY',
-         'site_contact' => 'Bob or Bill'
+        $response = $this->json('POST', '/api/sites', [
+             'name' => 'Sally',
+             'address' => '411 W Main St',
+             'abbreviation' => 'SY',
+             'site_contact' => 'Bob or Bill'
          ]);
 
-      $response = $this->get('/api/sites');
-      $response->assertStatus(200)
-               ->assertJsonFragment([
+        $response = $this->get('/api/sites');
+      
+        $response->assertStatus(200)
+            ->assertJsonFragment([
             'name' => 'Sally',
          ]);
+
+        $this->assertDatabaseHas('sites', [
+            'name' => 'Sally'
+        ]);   
     }
+
+    public function testPutSites(){
+        $response = DB::table('sites')->insertGetId([
+            'name' => "Sally",
+            'address' => "Luther Crater, The Moon",
+            'abbreviation' => "MC",
+            'site_contact' => "Joe Gill (859)555-5555",
+        ]);
+
+        $response = $this->post("/api/sites/$response", [
+            "_method" => "PUT",
+            "id" => $response,
+            'name'=> 'Joe'
+            ]);
+        
+        $this->assertDatabaseHas('sites', [
+            'name' => 'Joe'
+        ]); 
+
+    }
+
+    public function testDeletetest(){
+        $response = DB::table('sites')->insertGetId([
+            'name' => "Jolly",
+            'address' => "Luther Crater, The Moon",
+            'abbreviation' => "MC",
+            'site_contact' => "Joe Gill (859)555-5555",
+        ]);
+
+        $this->json('DELETE',"/api/sites/$response");
+
+        $this->assertSoftDeleted('sites', [
+                'id' => $response,
+            ]);
+
+    }
+
 }
