@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Site;
+use App\Note;
 use Illuminate\Http\Request;
 
 class SitesController extends Controller
@@ -16,6 +17,13 @@ class SitesController extends Controller
     {
         
         $sites = \App\Site::all(); 
+        // $ids = Site::all()->pluck('id');
+        // $notes = array();
+        foreach ($sites as $site) {
+            if (Note::getNotes('App\Site', $site->id)){
+             $site['notes'] = Note::getNotes('App\Site', $site->id);
+            }
+        }
         return $sites;    
     }
 

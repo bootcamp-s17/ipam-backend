@@ -35,7 +35,7 @@ $factory->define(App\Note::class, function (Faker\Generator $faker) {
     return [
         'text' => $faker->text,
         'user_id' => rand(1,10),
-        'noteable_id' => rand(1,8),
+        'noteable_id' => rand(1,6),
         'noteable_type' => $models[rand(0,3)],
     ];
 });
