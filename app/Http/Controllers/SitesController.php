@@ -74,9 +74,11 @@ class SitesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Site $sites)
-    {   
-        $site = \App\Site::find($request->id);
-        $site->fill($request->all())->save();
+
+    {
+        $sites = \App\Site::find($request->id);
+        $sites->fill($request->all())->save();
+
         return redirect()->route('test');
     }
 
