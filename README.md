@@ -67,6 +67,8 @@ php artisan serve --port=7000
 - 'ip/{subnet_id}/check/{new_ip_address}' - (GET) returns TRUE if the new ip address entered is available, FALSE if it is not
 - 'ip/{subnet_id}' - (GET) returns all ip addresses currently in use within the specified subnet
 
+- 'equipment_types' - (GET) returns both id and name columns from equipment types table
+
 
 
 
