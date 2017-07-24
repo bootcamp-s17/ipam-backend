@@ -56,3 +56,12 @@ php artisan serve --port=7000
 - `equipment/` - (POST) adds a equipment to the database
 - `equipment/{equipment}` - (PUT) edits a specific equipment in the database
 - `equipment/{equipment}` - (DELETE) removes a specific equipment from the database
+
+- 'ip/' - (GET) returns all ip addresses currently being used on this network
+- 'ip/{subnet_id}/next' - (GET) returns the next available ip address in the specified subnet
+- 'ip/{subnet_id}/check/{new_ip_address}' - (GET) returns TRUE if the new ip address entered is available, FALSE if it is not
+- 'ip/{subnet_id}' - (GET) returns all ip addresses currently in use within the specified subnet
+
+
+
+
