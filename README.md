@@ -19,7 +19,7 @@ php artisan serve --port=7000
 # IPAM - Backend instructions.
 
 - Clone repository to you computer
-- Change Directory into ipam-backend and open it, $ subl .
+- Change Directory into ipam-backend and open it in Sublime, or editor of choice
 - $ createdb ipam_back 
 - $ psql ipam_back
 - $ CREATE USER ipam_back WITH PASSWORD 'ipam_back';
@@ -33,7 +33,7 @@ php artisan serve --port=7000
 		DB_PORT=5432
 		DB_DATABASE=ipam_back
 		DB_USERNAME=ipam_back
-		DB_PASSWORD=ipam_back```
+		DB_PASSWORD=ipam_back
 - Install dependencies via composer `$ composer update`
 - Generate APP_KEY by typing `$ php artisan key:generate`
 - `$ npm install` to install dependencies from package.json
