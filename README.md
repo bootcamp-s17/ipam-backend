@@ -25,15 +25,20 @@ php artisan serve --port=7000
 - $ CREATE USER ipam_back WITH PASSWORD 'ipam_back';
 - Set up database connections. 
 	- Open .env.example and copy it's contents.
-	- In the terminal create .env file, $ touch .env
+	- In the terminal create .env file, `$ touch .env`
 	- Open in .env in sublime and paste contents.  
-	- Set DB_DATABASE, DB_USERNAME, DB_PASSWORD and DB_CONNECTION to "ipam_back"
-	- Set port to 5432. 
-	- Generate APP_KEY by typing "php artisan key:generate"
-- $ composer update
-- $ npm install   
-- $ php artisan migrate
-- $ php artisan db:seed
+	- Configure the following fields as follows:
+	- ```DB_CONNECTION=pgsql
+		DB_HOST=127.0.0.1
+		DB_PORT=5432
+		DB_DATABASE=ipam_back
+		DB_USERNAME=ipam_back
+		DB_PASSWORD=ipam_back```
+- Install dependencies via composer `$ composer update`
+- Generate APP_KEY by typing `$ php artisan key:generate`
+- `$ npm install` to install dependencies from package.json
+- `$ php artisan migrate` - to create the tables in our database
+- `$ php artisan db:seed` - seeds the tables in our database
 
 ## API Endpoints
 
