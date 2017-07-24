@@ -12,9 +12,7 @@ class NotesTableSeeder extends Seeder
     public function run()
     {
 
-        // $this->call(UsersTableSeeder::class);
-        $this->call(SitesTableSeeder::class);
-        $this->call(SubnetsTableSeeder::class);
+        factory('App\Note', 20)->create();
 
     }
 }
