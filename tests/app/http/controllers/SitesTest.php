@@ -20,6 +20,13 @@ class SitesTest extends TestCase
      *
      * @return void
      */
+    public function testSitesSites (){
+        $response = $this->get('/api/sites');
+
+        $response->assertStatus(200)->assertJson([]);
+    }
+
+
     public function testStoreSites(){
 
         $response = $this->json('POST', '/api/sites', [
@@ -31,8 +38,7 @@ class SitesTest extends TestCase
 
         $response = $this->get('/api/sites');
       
-        $response->assertStatus(200)
-            ->assertJsonFragment([
+        $response->assertJsonFragment([
             'name' => 'Sally',
          ]);
 
@@ -41,7 +47,7 @@ class SitesTest extends TestCase
         ]);   
     }
 
-    public function testPutSites(){
+    public function testPutSite(){
         $response = DB::table('sites')->insertGetId([
             'name' => "Sally",
             'address' => "Luther Crater, The Moon",
@@ -61,7 +67,7 @@ class SitesTest extends TestCase
 
     }
 
-    public function testDeletetest(){
+    public function testDeleteSite(){
         $response = DB::table('sites')->insertGetId([
             'name' => "Jolly",
             'address' => "Luther Crater, The Moon",
