@@ -17,10 +17,13 @@ class SitesController extends Controller
     {
         
         $sites = \App\Site::all(); 
-        // $ids = Site::all()->pluck('id');
-        // $notes = array();
+
+        // for each site add notes if there are any
         foreach ($sites as $site) {
+
             if (Note::getNotes('App\Site', $site->id)){
+             // getNotes lives in the Note model
+             // in getNotes pass the model and the id   
              $site['notes'] = Note::getNotes('App\Site', $site->id);
             }
         }
