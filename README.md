@@ -35,3 +35,24 @@ php artisan serve --port=7000
 - $ php artisan migrate
 - $ php artisan db:seed
 
+## API Endpoints
+
+### Sites
+
+- `sites/` - (GET) returns all of the site information for dashboard view
+- `sites/{sites}` - (GET) returns detailed information for a specific site
+- `sites/` - (POST) adds a site to the database
+- `sites/{sites}` - (PUT) edits a specific site in the database
+- `sites/{sites}` - (DELETE) removes a specific site from the database
+
+- `subnets/` - (GET) returns all of the subnet information for dashboard view
+- `subnets/{subnets}` - (GET) returns detailed information for a specific subnet
+- `subnets/` - (POST) adds a subnet to the database
+- `subnets/{subnets}` - (PUT) edits a specific subnet in the database
+- `subnets/{subnets}` - (DELETE) removes a specific subnet from the database
+
+- `equipment/` - (GET) returns all of the equipment information for dashboard view
+- `equipment/{equipment}` - (GET) returns detailed information for the specific equipment
+- `equipment/` - (POST) adds a equipment to the database
+- `equipment/{equipment}` - (PUT) edits a specific equipment in the database
+- `equipment/{equipment}` - (DELETE) removes a specific equipment from the database
