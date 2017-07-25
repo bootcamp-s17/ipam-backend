@@ -28,7 +28,7 @@ class Equipment extends Model
         return $this->belongsTo('App\Site');
     }
 
-    public function site(){
+    public function subnets(){
         return $this->belongsTo('App\Subnet');
     }
 
