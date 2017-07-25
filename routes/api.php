@@ -17,7 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('sites', 'SitesController@index');
+Route::get('sites', 'SitesController@index')->middleware('auth:api');;
 Route::get('sites/{sites}', 'SitesController@show');
 Route::post('sites', 'SitesController@store');
 Route::put('sites/{sites}', 'SitesController@update');

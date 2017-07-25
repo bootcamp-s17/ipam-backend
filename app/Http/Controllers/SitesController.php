@@ -17,7 +17,7 @@ class SitesController extends Controller
     {
         
 
-        $sites = \App\Site::all()->sortBy('name');
+        $sites = \App\Site::orderBy('name')->get();
 
         // for each site add notes if there are any
         foreach ($sites as $site) {
