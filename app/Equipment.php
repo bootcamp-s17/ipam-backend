@@ -20,13 +20,12 @@ class Equipment extends Model
     }
 
     public function notes(){
-        return $this->hasMany('App\Note');
+        return $this->morphMany('App\Note', 'noteable');
     }
     public function site(){
         return $this->belongsTo('App\Site');
     }
 
-    protected $table = 'equipments';
 
 }
 

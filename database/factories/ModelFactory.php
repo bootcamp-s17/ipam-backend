@@ -29,7 +29,7 @@ $factory->define(App\Note::class, function (Faker\Generator $faker) {
     $models = array(
       'App\Site',
       'App\Subnet',
-      'App\Equipments',
+      'App\Equipment',
       'App\Room',
       );
     return [

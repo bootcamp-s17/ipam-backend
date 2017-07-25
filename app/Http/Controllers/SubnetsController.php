@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Subnet;
+use App\Note;
 use Illuminate\Http\Request;
 
 class SubnetsController extends Controller
@@ -18,6 +19,12 @@ class SubnetsController extends Controller
         
         foreach ($subnets as $subnet) {
             $subnet['site']= $subnet->site()->get();
+
+            if (Note::getNotes('App\Subnet', $subnet->id)){
+             // getNotes lives in the Note model
+             // in getNotes pass the model and the id   
+             $subnet['notes'] = Note::getNotes('App\Subnet', $subnet->id);
+            }
             
         }
 

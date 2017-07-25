@@ -12,7 +12,7 @@ use App\Site;
 
 class SitesTest extends TestCase
 {
-   // use DatabaseTransactions;
+   use DatabaseTransactions;
 
 
     /**

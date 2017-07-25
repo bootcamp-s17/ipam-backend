@@ -17,7 +17,6 @@ class SitesController extends Controller
     {
         
         $sites = \App\Site::all(); 
-
         // for each site add notes if there are any
         foreach ($sites as $site) {
 

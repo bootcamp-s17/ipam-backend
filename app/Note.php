@@ -30,7 +30,7 @@ class Note extends Model
             array_push($modelNotes, array(
                'text' => $note->text,
                'user_id' => $note->user_id,
-               'last_updated' => $note->updated_at,
+               'last_updated' => $note->updated_at->createFromTimestamp(-1)->toDateTimeString(),
             ));
          }
          
