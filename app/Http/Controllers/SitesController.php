@@ -20,7 +20,7 @@ class SitesController extends Controller
         // for each site add notes if there are any
         foreach ($sites as $site) {
 
-            if (Note::getNotes('App\Site', $site->id)){
+            if (count($sites->find($site->id)->notes())){
              // getNotes lives in the Note model
              // in getNotes pass the model and the id   
              $site['notes'] = Note::getNotes('App\Site', $site->id);

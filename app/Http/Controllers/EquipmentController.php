@@ -20,8 +20,7 @@ class EquipmentController extends Controller
         foreach ($equipments as $equipment) {
             $equipment['site'] = $equipment->site()->get();
             $equipment['type'] = $equipment->equipment_type()->get();
-
-            if (Note::getNotes('App\Equipment', $equipment->id)){
+            if (count($equipments->find($equipment->id)->notes())){
              // getNotes lives in the Note model
              // in getNotes pass the model and the id   
              $equipment['notes'] = Note::getNotes('App\Equipment', $equipment->id);
