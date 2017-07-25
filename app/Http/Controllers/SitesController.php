@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Site;
+use App\Note;
 use Illuminate\Http\Request;
 
 class SitesController extends Controller
@@ -15,7 +16,19 @@ class SitesController extends Controller
     public function index()
     {
         
+
         $sites = DB::table('sites')->orderBy('name')->get();
+
+        // for each site add notes if there are any
+        foreach ($sites as $site) {
+
+            if (count($sites->find($site->id)->notes())){
+             // getNotes lives in the Note model
+             // in getNotes pass the model and the id   
+             $site['notes'] = Note::getNotes('App\Site', $site->id);
+            }
+        }
+
         return $sites;    
     }
 

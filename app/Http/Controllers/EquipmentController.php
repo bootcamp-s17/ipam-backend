@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Equipment;
+use App\Note;
 use Illuminate\Http\Request;
 
 class EquipmentController extends Controller
@@ -20,6 +21,12 @@ class EquipmentController extends Controller
             $equipment['site'] = $equipment->site()->get();
             $equipment['subnet'] = $equipment->subnet()->get();
             $equipment['type'] = $equipment->equipment_type()->get();
+
+            if (count($equipments->find($equipment->id)->notes())){
+             // getNotes lives in the Note model
+             // in getNotes pass the model and the id   
+             $equipment['notes'] = Note::getNotes('App\Equipment', $equipment->id);
+            }
 
         }
 

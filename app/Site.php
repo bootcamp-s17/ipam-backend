@@ -23,7 +23,9 @@ class Site extends Model
     }
     
     public function notes(){
-        return $this->morphMany('App\Note');
+
+        return $this->morphMany('App\Note', 'noteable');;
+
     }
     
     public function rooms(){
