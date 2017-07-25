@@ -17,7 +17,7 @@ class SitesController extends Controller
     {
         
 
-        $sites = DB::table('sites')->orderBy('name')->get();
+        $sites = \App\Site::all()->sortBy('name');
 
         // for each site add notes if there are any
         foreach ($sites as $site) {
@@ -73,7 +73,8 @@ class SitesController extends Controller
     {
         $subnets = $sites->subnets()->get();
         $sites['subnets'] = $subnets;
-        return json('$sites');
+        $sites['notes'] = Note::getNotes('App\Site', $sites->id);
+        return response()->json($sites,200);
     }
 
     /**
@@ -99,6 +100,10 @@ class SitesController extends Controller
     {
         $sites = \App\Site::find($request->id);
         $sites->fill($request->all())->save();
+
+        $note = new \App\Note(['text'=>$request->notes]);
+        $site = \App\Site::find($request->id);
+        $note = $site->notes()->save($note);
 
         return json($sites);
     }

@@ -15,11 +15,11 @@ class EquipmentController extends Controller
      */
     public function index()
     {
-        $equipments = DB::table('equipments')->orderBy('name')->get();
+        $equipments = \App\Equipment::all()->sortBy('name');
 
         foreach ($equipments as $equipment) {
             $equipment['site'] = $equipment->site()->get();
-            $equipment['subnet'] = $equipment->subnet()->get();
+            $equipment['subnet'] = $equipment->subnets()->get();
             $equipment['type'] = $equipment->equipment_type()->get();
 
             if (count($equipments->find($equipment->id)->notes())){
@@ -72,6 +72,7 @@ class EquipmentController extends Controller
     {
         $equipment['type'] = $equipment->equipment_type()->get();
         $equipment['site'] = $equipment->site()->get();
+        $equipment['notes'] = Note::getNotes('App\Equipment', $equipment->id);
         return $equipment;
     }
 
@@ -97,6 +98,9 @@ class EquipmentController extends Controller
     {
         $equip = new \App\Equipment;
         $equip->fill($request->all())->save();
+        $note = new \App\Note(['text'=>$request->notes]);
+        $equip = \App\Equip::find($request->id);
+        $note = $equip->notes()->save($note);
         return json($equip);
     }
 

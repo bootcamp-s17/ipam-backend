@@ -15,7 +15,7 @@ class SubnetsController extends Controller
      */
     public function index()
     {
-        $subnets = DB::table('subnets')->orderBy('name')->get();
+        $subnets = \App\Subnet::all()->sortBy('name');
         
         foreach ($subnets as $subnet) {
             $subnet['site']= $subnet->site()->get();
@@ -70,6 +70,7 @@ class SubnetsController extends Controller
     public function show(Subnet $subnets)
     {
         $subnets['site'] = $subnets->site()->get();
+        $subnets['notes'] = Note::getNotes('App\Subnet', $subnets->id);
         return $subnets;
     }
 
@@ -95,7 +96,9 @@ class SubnetsController extends Controller
     {
         $subnets = \App\Subnet::find($request->id);
         $subnets->fill($request->all())->save();
-
+        $note = new \App\Note(['text'=>$request->notes]);
+        $subnet = \App\Subnet::find($request->id);
+        $note = $subnet->notes()->save($note);
         
         return response()->json($subnets,200);
     }
