@@ -16,7 +16,9 @@ class SitesController extends Controller
     public function index()
     {
         
-        $sites = \App\Site::all(); 
+
+        $sites = DB::table('sites')->orderBy('name')->get();
+
         // for each site add notes if there are any
         foreach ($sites as $site) {
 
@@ -26,6 +28,7 @@ class SitesController extends Controller
              $site['notes'] = Note::getNotes('App\Site', $site->id);
             }
         }
+
         return $sites;    
     }
 
@@ -49,7 +52,7 @@ class SitesController extends Controller
     {
         $site = new \App\Site;
         $site->fill($request->all())->save();
-        return redirect()->route('test');
+        return json($site);
     }
 
     /**
@@ -62,7 +65,7 @@ class SitesController extends Controller
     {
         $subnets = $sites->subnets()->get();
         $sites['subnets'] = $subnets;
-        return Route('test');
+        return json('$sites');
     }
 
     /**
@@ -89,7 +92,7 @@ class SitesController extends Controller
         $sites = \App\Site::find($request->id);
         $sites->fill($request->all())->save();
 
-        return redirect()->route('test');
+        return json($sites);
     }
 
     /**
@@ -102,6 +105,6 @@ class SitesController extends Controller
     {
         $site = \App\Site::find($sites->id);
         $site->delete();
-        return redirect()->route('test');
+        return json(null);
     }
 }

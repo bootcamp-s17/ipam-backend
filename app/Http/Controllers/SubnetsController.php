@@ -15,7 +15,7 @@ class SubnetsController extends Controller
      */
     public function index()
     {
-        $subnets = \App\Subnet::all();
+        $subnets = DB::table('subnets')->orderBy('name')->get();
         
         foreach ($subnets as $subnet) {
             $subnet['site']= $subnet->site()->get();
@@ -51,7 +51,7 @@ class SubnetsController extends Controller
     {
         $subnet = new \App\Subnet;
         $subnet->fill($request->all())->save();
-        return redirect()->route('test');
+        return json($subnet);
     }
 
     /**
@@ -86,8 +86,11 @@ class SubnetsController extends Controller
      */
     public function update(Request $request, Subnet $subnets)
     {
-        $subnet->update($request->all());
-        return response()->json($subnet,200);
+        $subnets = \App\Subnet::find($request->id);
+        $subnets->fill($request->all())->save();
+
+        
+        return response()->json($subnets,200);
     }
 
     /**

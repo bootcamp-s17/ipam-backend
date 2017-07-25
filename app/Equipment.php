@@ -28,6 +28,10 @@ class Equipment extends Model
         return $this->belongsTo('App\Site');
     }
 
+    public function site(){
+        return $this->belongsTo('App\Subnet');
+    }
+
 }
 
 
