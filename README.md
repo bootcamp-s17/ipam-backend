@@ -20,20 +20,21 @@ php artisan serve --port=7000
 
 - Clone repository to you computer
 - Change Directory into ipam-backend and open it in Sublime, or editor of choice
-- $ createdb ipam_back 
-- $ psql ipam_back
-- $ CREATE USER ipam_back WITH PASSWORD 'ipam_back';
+-` $ psql postgres `
+- ` $ CREATE USER ipam_back WITH PASSWORD 'ipam_back';  `;
+- ` $ CREATE DATABASE ipam_back -O ipam_back ;`;
 - Set up database connections. 
 	- Open .env.example and copy it's contents.
 	- In the terminal create .env file, `$ touch .env`
 	- Open in .env in sublime and paste contents.  
 	- Configure the following fields as follows:
-	- ```DB_CONNECTION=pgsql
+	- ``` DB_CONNECTION=pgsql
 		DB_HOST=127.0.0.1
 		DB_PORT=5432
 		DB_DATABASE=ipam_back
 		DB_USERNAME=ipam_back
 		DB_PASSWORD=ipam_back
+	  ```
 - Install dependencies via composer `$ composer update`
 - Generate APP_KEY by typing `$ php artisan key:generate`
 - `$ npm install` to install dependencies from package.json
