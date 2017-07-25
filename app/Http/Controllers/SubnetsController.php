@@ -49,9 +49,9 @@ class SubnetsController extends Controller
      */
     public function store(Request $request)
     {
-         $subnet = \App\Subnet::create($request->all());
-
-        return response()->json($equipment,201);
+        $subnet = new \App\Subnet;
+        $subnet->fill($request->all())->save();
+        return redirect()->route('test');
     }
 
     /**
