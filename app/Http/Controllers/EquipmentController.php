@@ -14,11 +14,13 @@ class EquipmentController extends Controller
      */
     public function index()
     {
-        $equipments = \App\Equipment::all();
+        $equipments = DB::table('equipments')->orderBy('name')->get();
 
         foreach ($equipments as $equipment) {
             $equipment['site'] = $equipment->site()->get();
+            $equipment['subnet'] = $equipment->subnet()->get();
             $equipment['type'] = $equipment->equipment_type()->get();
+
         }
 
         return $equipments;
@@ -44,7 +46,7 @@ class EquipmentController extends Controller
     {
         $equip = new \App\Equipment;
         $equip->fill($request->all())->save();
-        return redirect()->route('test');
+        return json($equip);
     }
 
     /**
@@ -82,7 +84,7 @@ class EquipmentController extends Controller
     {
         $equip = new \App\Equipment;
         $equip->fill($request->all())->save();
-        return redirect()->route('test');
+        return json($equip);
     }
 
     /**
@@ -95,6 +97,6 @@ class EquipmentController extends Controller
     {
         $equip = \App\Equipment::find($equipment->id);
         $equip->delete();
-        return redirect()->route('test');
+        return json($equip);
     }
 }

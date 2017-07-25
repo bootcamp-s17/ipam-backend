@@ -71,3 +71,8 @@ class RouteServiceProvider extends ServiceProvider
              ->group(base_path('routes/api.php'));
     }
 }
+    Route::group([
+        'middleware' => ['api', 'cors'],
+        'namespace' => $this->namespace,
+        'prefix' => 'api',
+    ], function ($router) {
