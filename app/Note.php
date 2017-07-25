@@ -27,11 +27,11 @@ class Note extends Model
       foreach ($model->notes as $note) {
          
          if ($note){
-            array_push($modelNotes, array([
+            array_push($modelNotes, array(
                'text' => $note->text,
                'user_id' => $note->user_id,
                'last_updated' => $note->updated_at,
-            ]));
+            ));
          }
          
       }
