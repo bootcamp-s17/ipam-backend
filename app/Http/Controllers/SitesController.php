@@ -52,7 +52,15 @@ class SitesController extends Controller
     {
         $site = new \App\Site;
         $site->fill($request->all())->save();
+        
+        //Insert notes
+        $site_id = $site->id;
+        $note = new \App\Note(['text'=>$request->notes]);
+        $site = \App\Site::find($site_id);
+        $note = $site->notes()->save($note);
         return json($site);
+
+
     }
 
     /**

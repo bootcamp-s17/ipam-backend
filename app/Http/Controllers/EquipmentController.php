@@ -53,6 +53,12 @@ class EquipmentController extends Controller
     {
         $equip = new \App\Equipment;
         $equip->fill($request->all())->save();
+
+        //Insert notes
+        $equip_id = $equip->id;
+        $note = new \App\Note(['text'=>$request->notes]);
+        $equip = \App\Equip::find($equip_id);
+        $note = $equip->notes()->save($note);
         return json($equip);
     }
 

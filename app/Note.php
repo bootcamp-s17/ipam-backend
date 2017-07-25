@@ -12,9 +12,10 @@ class Note extends Model
     use SoftDeletes;
 
     protected $dates = ['deleted_at'];
+    protected $fillable = ['text','noteable_id','noteable_type','user_id'];
 
     public function noteable () {
-    	return $this->morphTo();
+      return $this->morphTo();
     }
 
     static function getNotes ($model, $id){

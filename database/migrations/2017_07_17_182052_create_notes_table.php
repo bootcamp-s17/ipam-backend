@@ -16,7 +16,9 @@ class CreateNotesTable extends Migration
         Schema::create('notes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('text');
-            $table->integer('user_id');
+
+            //When authentication is live, remove nullable from user_id)
+            $table->integer('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->integer('noteable_id');
             $table->string('noteable_type');

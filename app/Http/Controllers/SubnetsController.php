@@ -51,6 +51,13 @@ class SubnetsController extends Controller
     {
         $subnet = new \App\Subnet;
         $subnet->fill($request->all())->save();
+
+        //Insert notes
+        $subnet_id = $subnet->id;
+        $note = new \App\Note(['text'=>$request->notes]);
+        $subnet = \App\Subnet::find($subnet_id);
+        $note = $subnet->notes()->save($note);
+
         return json($subnet);
     }
 
