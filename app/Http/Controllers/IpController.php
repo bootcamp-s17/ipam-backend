@@ -60,6 +60,8 @@ class IpController extends Controller
     {
         //declares a variable for the subnet address maximum value of the 4th integer slot
         $subnet_max = $this->subnet_min_range($subnet_id) + ($this->get_maskbit_range($subnet_id));
+        // var_dump($subnet_max);
+
         return $subnet_max;
     }
 
@@ -119,6 +121,7 @@ class IpController extends Controller
                     return response()->json([
                         'boolean' => true,
                         'error_message' => 'none',
+                        'error_number' => 0,
                         ]);
 
                 //     return 'True, the requested ip address is within the maskbit range, and is not currently in use';//
@@ -127,35 +130,47 @@ class IpController extends Controller
                 else {
                     $equipment_name = Equipment::all()
                         ->where('ip_address', $new_ip_address)
-                        ->pluck('name');
-                    var_dump($equipment_name);
+                        ->pluck('name')
+                        ->toArray();
+                    // var_dump($equipment_name[0]);
 
                     $equipment_serial = Equipment::all()
                         ->where('ip_address', $new_ip_address)
-                        ->pluck('serial_number');
-                    // var_dump($equipment_serial);
+                        ->pluck('serial_number')
+                        ->toArray();
+                    // var_dump($equipment_serial[0]);
 
                     return response()->json([
                         'boolean' => false,
-                        // 'error_message' => "'the requested ip address is currently being used by the equipment with name: ' . $equipment_name . ' and serial#: ' . $equipment_serial'",
+                        'error_message' => "the requested ip address is currently being used by the equipment with name: $equipment_name[0] and serial#: $equipment_serial[0]",
+                        'error_number' => 3,
                         ]);
 
                     // return 'False, the requested ip address is currently being used by the equipment with name: ' . $equipment_name . ' and serial#: ' . $equipment_serial;
                 }
             }
             else {
+
+                $min = ($this->subnet_min_range($subnet_id))+1;
+                $max = $this->subnet_max_range($subnet_id);
+
                 return response()->json([
                     'boolean' => false,
-                    // 'error_message' => "'False, the requested ip address is outside of the given maskbit range for the specified subnet address, the new ip address should end with anything between ' . $this->subnet_min_range($subnet_id) . ' and ' . $this->subnet_max_range($subnet_id)",
+                    'error_message' => "False, the requested ip address is outside of the given maskbit range for the specified subnet address, the new ip address should end with anything between $min and $max",
+                    'error_number' => 2,
                     ]);
 
                 // return 'False, the requested ip address is outside of the given maskbit range for the specified subnet address, the new ip address should end with anything between ' . $this->subnet_min_range($subnet_id) . ' and ' . $this->subnet_max_range($subnet_id);
             }
         }
         else {
+
+            $subnet = $this->get_specific_subnet($subnet_id);
+
             return response()->json([
                 'boolean' => false,
-                // 'error_message' => "'False, the requested ip address is not within the specified subnet address, the new ip address should start with: ' . $this->get_specific_subnet($subnet_id)",
+                'error_message' => "False, the requested ip address is not within the specified subnet address, the new ip address should start with: $subnet",
+                'error_number' => 1,
                 ]);
 
             // return 'False, the requested ip address is not within the specified subnet address, the new ip address should start with: ' . $this->get_specific_subnet($subnet_id);
