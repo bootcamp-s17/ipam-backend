@@ -29,13 +29,13 @@ $factory->define(App\Note::class, function (Faker\Generator $faker) {
     $models = array(
       'App\Site',
       'App\Subnet',
-      'App\Equipments',
+      'App\Equipment',
       'App\Room',
       );
     return [
         'text' => $faker->text,
         'user_id' => rand(1,10),
-        'noteable_id' => rand(1,8),
+        'noteable_id' => rand(1,6),
         'noteable_type' => $models[rand(0,3)],
     ];
 });

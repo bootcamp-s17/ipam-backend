@@ -18,7 +18,7 @@ class Subnet extends Model
         return $this->belongsTo('App\Site');
     }
     public function notes(){
-        return $this->hasMany('App\Note');
+        return $this->morphMany('App\Note', 'noteable');
     }
    
 }
