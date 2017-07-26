@@ -159,8 +159,8 @@ class SitesController extends Controller
             'name' => 'required|filled|string|max:40|unique:sites',
             'address' => 'required|filled|string|max:100',
             'abbreviation' => 'required|filled|string|max:6',
-            'site_contact' => 'required|filled|string|max:50',
-            'notes' => 'required|filled|string|max:250',
+            'site_contact' => 'string|max:50',
+            'notes' => 'string|max:250',
         ]);
         // return the valedator object
         return $validator;      

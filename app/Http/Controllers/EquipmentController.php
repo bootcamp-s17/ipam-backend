@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Equipment;
 use App\Note;
+use Validator;
 use Illuminate\Http\Request;
 
 class EquipmentController extends Controller
@@ -51,15 +52,31 @@ class EquipmentController extends Controller
      */
     public function store(Request $request)
     {
-        $equip = new \App\Equipment;
+
+         // validate incoming request
+        $validator = $this->validates($request);
+        // if there are any errors
+        if ($validator->fails()) {
+            // return the request and errors
+            return array(
+                    'data' => request()->all(),
+                    'errors' => $validator->errors()->all(),
+                );
+        }
+
+        $equip = new Equipment;
         $equip->fill($request->all())->save();
 
         //Insert notes
         $equip_id = $equip->id;
-        $note = new \App\Note(['text'=>$request->notes]);
-        $equip = \App\Equip::find($equip_id);
+        $note = new Note(['text'=>$request->notes]);
+        $equip = Equipment::find($equip_id);
         $note = $equip->notes()->save($note);
-        return json($equip);
+        return response()->json(array(
+            "data" => $equip,
+            "message" => 'Successfully updated.',
+            "status" => 200,
+            ));
     }
 
     /**
@@ -96,12 +113,26 @@ class EquipmentController extends Controller
      */
     public function update(Request $request, Equipment $equipment)
     {
+        $validator = $this->validates($request);
+        // if there are any errors
+        if ($validator->fails()) {
+            // return the request and errors
+            return array(
+                    'data' => request()->all(),
+                    'errors' => $validator->errors()->all(),
+                );
+        }
+
         $equip = new \App\Equipment;
         $equip->fill($request->all())->save();
         $note = new \App\Note(['text'=>$request->notes]);
         $equip = \App\Equip::find($request->id);
         $note = $equip->notes()->save($note);
-        return json($equip);
+        return response()->json(array(
+            "data" => $equip,
+            "message" => 'Successfully updated.',
+            "status" => 200,
+            ));
     }
 
     /**
@@ -114,6 +145,46 @@ class EquipmentController extends Controller
     {
         $equip = \App\Equipment::find($equipment->id);
         $equip->delete();
-        return json($equip);
+        return response()->json(array(
+            "data" => $equip,
+            "message" => 'Successfully updated.',
+            "status" => 204,
+            ));
+    }
+
+    public function validates ($request){
+        // https://laravel.com/docs/5.4/validation
+        // validate incoming request
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|filled|string',
+            'equipment_type_id' => 'integer|exists:equipment_types,id',
+            'room_id' => 'required|integer|exists:rooms,id',
+            'ip_address' => 'required|ip|unique:subnets,subnet_address|unique:equipments,ip_address|filled',
+            'site_id' => 'required|filled|integer|exists:sites,id',
+            'subnet_id' => 'required|filled|integer|exists:subnets,id',
+            'host_name' => 'string|max:50',
+            'port_number' => 'integer',
+            'mac_address' => 'required_unless:equipment_type_id,9|unique:equipments,mac_address',
+            'mab' => 'required|boolean',
+            //switch specific equiment type must be 10
+            'switch_man_ip' => 'required_if:equipment_type_id,10|ip',
+            // end switch specific
+            //computer specific
+            'os_version' => 'required_if:equipment_type_id,2|string',
+            'physical' => 'required_if:equipment_type_id,2|boolean',
+            // end computer specific
+            // printer specific
+            // printer has to be id 1 in equipment types table
+            'model' => 'required_if:equipment_type_id,1|string',
+            'driver' => 'required_if:equipment_type_id,1|string',
+            'printer_server' => 'required_if:equipment_type_id,1|string',
+            'printer_name' => 'required_if:equipment_type_id,1|string',
+            'share_name' => 'required_if:equipment_type_id,1|string',
+            'share_comment' => 'required_if:equipment_type_id,1|string',
+            // end printer specific
+            'notes' => 'string|max:250',
+        ]);
+        // return the valedator object
+        return $validator;      
     }
 }

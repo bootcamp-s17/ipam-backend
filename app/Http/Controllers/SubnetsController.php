@@ -158,9 +158,10 @@ class SubnetsController extends Controller
             'name' => 'required|filled|string|max:75|unique:sites',
             'site_id' => 'required|filled|integer|exists:sites,id',
             'subnet_address' => 'required|filled|ip',
-            'mask_bits' => 'integer|min:24|max:32',
+            'mask_bits' => 'integer|min:1|max:32',
             'vLan' => 'integer',
-            'notes' => 'required|filled|string|max:250',
+            'lease_time' => 'integer'
+            'notes' => 'string|max:250',
         ]);
         // return the valedator object
         return $validator;      

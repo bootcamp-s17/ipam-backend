@@ -23,7 +23,7 @@ class EquipmentsTableSeeder extends Seeder
             'subnet_id' =>'1',
             // 'host_name' => 'bobby',
             // 'port_number' => 80,
-            'mac_address' => '00-60-9f-93-79-b5',
+            'mac_address' => '00-60-9f-93-79-b1',
             'mab' => false,
             // 'printer_server' => '',
             // 'printer_name' => ,
