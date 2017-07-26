@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Site;
 use App\Note;
+use Validator;
 use Illuminate\Http\Request;
 
 class SitesController extends Controller
@@ -49,10 +50,20 @@ class SitesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $site = new \App\Site;
+    {   
+        // validate incoming request
+        $validator = $this->validates($request);
+        // if there are any errors
+        if ($validator->fails()) {
+            // return the request and errors
+            return array(
+                    'data' => request()->all(),
+                    'errors' => $validator->errors()->all(),
+                );
+        }
+        // Store Site...
+        $site = new Site;
         $site->fill($request->all())->save();
-        
         //Insert notes
         if ($request->notes()) {
             $site_id = $site->id;
@@ -60,7 +71,11 @@ class SitesController extends Controller
             $site = \App\Site::find($site_id);
             $note = $site->notes()->save($note);
         }
-        return response()->json($site);
+        return response()->json(array(
+            "data" => $sites,
+            "message" => 'Successfully added.',
+            "status" => 200,
+            ));
 
 
     }
@@ -71,12 +86,12 @@ class SitesController extends Controller
      * @param  \App\Sites  $sites
      * @return \Illuminate\Http\Response
      */
-    public function show(Site $sites)
+    public function show()
     {
         $subnets = $sites->subnets()->get();
         $sites['subnets'] = $subnets;
         $sites['notes'] = Note::getNotes('App\Site', $sites->id);
-        return response()->json($sites,200);
+        return json($sites);
     }
 
     /**
@@ -97,17 +112,35 @@ class SitesController extends Controller
      * @param  \App\Sites  $sites
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Site $sites)
 
-    {
+    public function update(Request $request){
+        //https://laravel.com/docs/5.4/validation
+        //validate incoming request
+        $validator = $this->validates($request);
+        // if there are any errors
+        if ($validator->fails()) {
+            // return the request and errors
+            return array(
+                    'data' => request()->all(),
+                    'errors' => $validator->errors()->all(),
+                );
+        }
+
         $sites = \App\Site::find($request->id);
         $sites->fill($request->all())->save();
         if ($request->notes()) {
             $note = new \App\Note(['text'=>$request->notes]);
-            $site = \App\Site::find($request->id);
+            $sites = \App\Site::find($request->id);
             $note = $site->notes()->save($note);
         }
-        return response()->json($sites,200);
+
+
+        return response()->json(array(
+            "data" => $sites,
+            "message" => 'Successfully updated.',
+            "status" => 200,
+            ));
+
     }
 
     /**
@@ -120,6 +153,25 @@ class SitesController extends Controller
     {
         $site = \App\Site::find($sites->id);
         $site->delete();
-        return response()->json(null,204);
+
+        return response()->json(array(
+            "data" => $site,
+            "message" => 'Deleted.',
+            "status" => 204,
+            ));
+    }
+
+    public function validates ($request){
+        // https://laravel.com/docs/5.4/validation
+        // validate incoming request
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|filled|string|max:40|unique:sites',
+            'address' => 'required|filled|string|max:100',
+            'abbreviation' => 'required|filled|string|max:6',
+            'site_contact' => 'string|max:50',
+            'notes' => 'string|max:250',
+        ]);
+        // return the valedator object
+        return $validator;      
     }
 }

@@ -21,7 +21,10 @@ class EquipmentsTableSeeder extends Seeder
             'ip_address' => '10.34.138.200',
             'site_id' => 1,
             'subnet_id' =>'1',
-            'mac_address' => '00-60-9f-93-79-b5',
+
+            // 'host_name' => 'bobby',
+            // 'port_number' => 80,
+            'mac_address' => '00-60-9f-93-79-b1',
             'mab' => false,
             'room_id'=> rand(1, 14),
         ]);

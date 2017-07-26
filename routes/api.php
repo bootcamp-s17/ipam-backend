@@ -53,4 +53,3 @@ Route::get('mac_address/{new_mac_address}', 'MacAddressController@index');
 
 
 
-
