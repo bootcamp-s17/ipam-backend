@@ -30,7 +30,7 @@ class EquipmentController extends Controller
 
         }
 
-        return $equipments;
+        return response()->json($equipments,200);
     }
 
     /**
@@ -55,11 +55,13 @@ class EquipmentController extends Controller
         $equip->fill($request->all())->save();
 
         //Insert notes
-        $equip_id = $equip->id;
-        $note = new \App\Note(['text'=>$request->notes]);
-        $equip = \App\Equip::find($equip_id);
-        $note = $equip->notes()->save($note);
-        return json($equip);
+        if ($request->notes()) {
+            $equip_id = $equip->id;
+            $note = new \App\Note(['text'=>$request->notes]);
+            $equip = \App\Equip::find($equip_id);
+            $note = $equip->notes()->save($note);
+    }   
+        return response()->json($equip,201);
     }
 
     /**
@@ -73,7 +75,7 @@ class EquipmentController extends Controller
         $equipment['type'] = $equipment->equipment_type()->get();
         $equipment['site'] = $equipment->site()->get();
         $equipment['notes'] = Note::getNotes('App\Equipment', $equipment->id);
-        return $equipment;
+        return response()->json($equipment,200);
     }
 
     /**
@@ -98,10 +100,12 @@ class EquipmentController extends Controller
     {
         $equip = new \App\Equipment;
         $equip->fill($request->all())->save();
-        $note = new \App\Note(['text'=>$request->notes]);
-        $equip = \App\Equip::find($request->id);
-        $note = $equip->notes()->save($note);
-        return json($equip);
+        if ($request->notes()) {
+            $note = new \App\Note(['text'=>$request->notes]);
+            $equip = \App\Equip::find($request->id);
+            $note = $equip->notes()->save($note);
+        }
+        return response()->json($equip);
     }
 
     /**
@@ -114,6 +118,6 @@ class EquipmentController extends Controller
     {
         $equip = \App\Equipment::find($equipment->id);
         $equip->delete();
-        return json($equip);
+        return response()->json($equip,204);
     }
 }
