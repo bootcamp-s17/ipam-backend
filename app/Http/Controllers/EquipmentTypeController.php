@@ -16,9 +16,9 @@ class EquipmentTypeController extends Controller
     {
         //
         $equipment_type = EquipmentType::all()
-            ->pluck('id', 'name')
+            ->pluck('name')
             ->toArray();
-        var_dump($equipment_type);
+        return $equipment_type;
     }
 
     /**
