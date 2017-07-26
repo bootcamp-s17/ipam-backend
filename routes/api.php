@@ -30,6 +30,8 @@ Route::post('subnets', 'SubnetsController@store');
 Route::put('subnets/{subnets}', 'SubnetsController@update');
 Route::delete('subnets/{subnets}', 'SubnetsController@destroy');
 
+Route::get('subnets/{new_maskbit}/{new_subnet_address}', 'SubnetsController@check');
+
 
 Route::get('equipment', 'EquipmentController@index');
 Route::get('equipment/{equipment}', 'EquipmentController@show');
