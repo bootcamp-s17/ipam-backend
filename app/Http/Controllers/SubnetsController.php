@@ -15,7 +15,7 @@ class SubnetsController extends Controller
      */
     public function index()
     {
-        $subnets = Subnet::orderBy('name');
+        $subnets = Subnet::orderBy('name')->get();
         
         foreach ($subnets as $subnet) {
             $subnet['site']= $subnet->site()->get();

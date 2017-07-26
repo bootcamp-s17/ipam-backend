@@ -15,7 +15,7 @@ class EquipmentController extends Controller
      */
     public function index()
     {
-        $equipments = Equipment::orderBy('name');
+        $equipments = Equipment::orderBy('name')->get();
 
         foreach ($equipments as $equipment) {
             $equipment['site'] = $equipment->site()->get();
