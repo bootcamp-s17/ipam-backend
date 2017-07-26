@@ -16,7 +16,7 @@ class EquipmentTypeController extends Controller
     {
         //
         $equipment_type = EquipmentType::all();
-        var_dump($equipment_type);
+        // var_dump($equipment_type);
 
         return $equipment_type;
     }
