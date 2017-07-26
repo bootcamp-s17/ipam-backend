@@ -47,6 +47,10 @@ class EquipmentTypesTableSeeder extends Seeder
         DB::table('equipment_types')->insert([
             'name' => "Placeholder",
         ]);
+
+        DB::table('equipment_types')->insert([
+            'name' => "Switch",
+        ]);
     }
 }
 
