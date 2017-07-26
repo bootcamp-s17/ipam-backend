@@ -16,7 +16,7 @@ class SubnetsController extends Controller
      */
     public function index()
     {
-        $subnets = \App\Subnet::all()->sortBy('name');
+        $subnets = Subnet::orderBy('name')->get();
         
         foreach ($subnets as $subnet) {
             $subnet['site']= $subnet->site()->get();
@@ -29,7 +29,7 @@ class SubnetsController extends Controller
             
         }
 
-        return $subnets;
+        return response()->json($subnets);
     }
 
     /**
@@ -65,11 +65,13 @@ class SubnetsController extends Controller
         $subnet->fill($request->all())->save();
 
         //Insert notes
-        $subnet_id = $subnet->id;
-        $note = new Note(['text'=>$request->notes]);
-        $subnet = Subnet::find($subnet_id);
-        $note = $subnet->notes()->save($note);
 
+        if ($request->notes()) {
+            $subnet_id = $subnet->id;
+            $note = new \App\Note(['text'=>$request->notes]);
+            $subnet = \App\Subnet::find($subnet_id);
+            $note = $subnet->notes()->save($note);
+        }
         return response()->json(array(
             "data" => $subnet,
             "message" => 'Successfully added.',
@@ -87,7 +89,7 @@ class SubnetsController extends Controller
     {
         $subnets['site'] = $subnets->site()->get();
         $subnets['notes'] = Note::getNotes('App\Subnet', $subnets->id);
-        return $subnets;
+        return response()->json($subnets);
     }
 
     /**
@@ -123,15 +125,19 @@ class SubnetsController extends Controller
 
         $subnets = \App\Subnet::find($request->id);
         $subnets->fill($request->all())->save();
+        if ($request->notes()) {
         $note = new \App\Note(['text'=>$request->notes]);
         $subnet = \App\Subnet::find($request->id);
         $note = $subnet->notes()->save($note);
+
         
         return response()->json(array(
             "data" => $subnet,
             "message" => 'Successfully updated.',
             "status" => 200,
             ));
+
+        
     }
 
     /**

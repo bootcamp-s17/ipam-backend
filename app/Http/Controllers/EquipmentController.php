@@ -16,7 +16,7 @@ class EquipmentController extends Controller
      */
     public function index()
     {
-        $equipments = \App\Equipment::all()->sortBy('name');
+        $equipments = Equipment::orderBy('name')->get();
 
         foreach ($equipments as $equipment) {
             $equipment['site'] = $equipment->site()->get();
@@ -31,7 +31,7 @@ class EquipmentController extends Controller
 
         }
 
-        return $equipments;
+        return response()->json($equipments,200);
     }
 
     /**
@@ -68,15 +68,19 @@ class EquipmentController extends Controller
         $equip->fill($request->all())->save();
 
         //Insert notes
-        $equip_id = $equip->id;
-        $note = new Note(['text'=>$request->notes]);
-        $equip = Equipment::find($equip_id);
-        $note = $equip->notes()->save($note);
+        if ($request->notes()) {
+            $equip_id = $equip->id;
+            $note = new \App\Note(['text'=>$request->notes]);
+            $equip = \App\Equip::find($equip_id);
+            $note = $equip->notes()->save($note);
+        }   
+
         return response()->json(array(
             "data" => $equip,
             "message" => 'Successfully updated.',
             "status" => 200,
             ));
+
     }
 
     /**
@@ -90,7 +94,7 @@ class EquipmentController extends Controller
         $equipment['type'] = $equipment->equipment_type()->get();
         $equipment['site'] = $equipment->site()->get();
         $equipment['notes'] = Note::getNotes('App\Equipment', $equipment->id);
-        return $equipment;
+        return response()->json($equipment,200);
     }
 
     /**
@@ -125,10 +129,15 @@ class EquipmentController extends Controller
 
         $equip = new \App\Equipment;
         $equip->fill($request->all())->save();
-        $note = new \App\Note(['text'=>$request->notes]);
-        $equip = \App\Equip::find($request->id);
-        $note = $equip->notes()->save($note);
-        return response()->json(array(
+
+        $equip = new \App\Equipment;
+        $equip->fill($request->all())->save();
+        if ($request->notes()) {
+            $note = new \App\Note(['text'=>$request->notes]);
+            $equip = \App\Equip::find($request->id);
+            $note = $equip->notes()->save($note);
+        }
+         return response()->json(array(
             "data" => $equip,
             "message" => 'Successfully updated.',
             "status" => 200,

@@ -18,7 +18,7 @@ class SitesController extends Controller
     {
         
 
-        $sites = \App\Site::all()->sortBy('name');
+        $sites = Site::orderBy('name')->get();
 
         // for each site add notes if there are any
         foreach ($sites as $site) {
@@ -30,7 +30,7 @@ class SitesController extends Controller
             }
         }
 
-        return $sites;    
+        return response()->json($sites,200);    
     }
 
     /**
@@ -65,12 +65,19 @@ class SitesController extends Controller
         $site = new Site;
         $site->fill($request->all())->save();
         //Insert notes
-        $site_id = $site->id;
-        $note = new Note(['text'=>$request->notes]);
-        $site = Site::find($site_id);
-        $note = $site->notes()->save($note);
-        
-        return response()->json($site);
+        if ($request->notes()) {
+            $site_id = $site->id;
+            $note = new \App\Note(['text'=>$request->notes]);
+            $site = \App\Site::find($site_id);
+            $note = $site->notes()->save($note);
+        }
+        return response()->json(array(
+            "data" => $sites,
+            "message" => 'Successfully added.',
+            "status" => 200,
+            ));
+
+
     }
 
     /**
@@ -84,11 +91,7 @@ class SitesController extends Controller
         $subnets = $sites->subnets()->get();
         $sites['subnets'] = $subnets;
         $sites['notes'] = Note::getNotes('App\Site', $sites->id);
-        return response()->json(array(
-            "data" => $sites,
-            "message" => 'Successfully added.',
-            "status" => 200,
-            ));
+        return json($sites);
     }
 
     /**
@@ -109,6 +112,7 @@ class SitesController extends Controller
      * @param  \App\Sites  $sites
      * @return \Illuminate\Http\Response
      */
+
     public function update(Request $request){
         //https://laravel.com/docs/5.4/validation
         //validate incoming request
@@ -122,17 +126,21 @@ class SitesController extends Controller
                 );
         }
 
-        $site = Site::find($request->id);
-        $note = new Note(['text'=>$request->notes]);
-        $note = $site->notes()->save($note);
-        $site->fill($request->all())->save();
+        $sites = \App\Site::find($request->id);
+        $sites->fill($request->all())->save();
+        if ($request->notes()) {
+            $note = new \App\Note(['text'=>$request->notes]);
+            $sites = \App\Site::find($request->id);
+            $note = $site->notes()->save($note);
+        }
 
 
         return response()->json(array(
-            "data" => $site,
+            "data" => $sites,
             "message" => 'Successfully updated.',
             "status" => 200,
             ));
+
     }
 
     /**
@@ -145,6 +153,7 @@ class SitesController extends Controller
     {
         $site = \App\Site::find($sites->id);
         $site->delete();
+
         return response()->json(array(
             "data" => $site,
             "message" => 'Deleted.',
