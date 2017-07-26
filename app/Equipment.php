@@ -13,7 +13,7 @@ class Equipment extends Model
     protected $dates = ['deleted_at'];
 
     protected $table = 'equipments';
-    protected $fillable = ['name', 'equipment_type_id','model', 'driver', 'serial_number','ip_address','site_id','subnet_id','host_name','port_number','mac_address','mab','printer_server','printer_name','share_name','share_comment','room_id'];
+    protected $fillable = ['name', 'equipment_type_id','model', 'driver', 'serial_number','ip_address','site_id','subnet_id','host_name','port_number','mac_address','mab','printer_server','printer_name','share_name','share_comment','room_id','switch_man_ip','os_version','physical'];
 
     //Specifying the join relationships
     
