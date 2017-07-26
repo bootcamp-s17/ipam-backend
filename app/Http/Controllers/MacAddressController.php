@@ -12,11 +12,47 @@ class MacAddressController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+
+    //returns validation information for the custom mac address the user want to use
+    public function index($new_mac_address)
     {
-        //
-        $mac_address = Equipment::all()->pluck('mac_address');
-        return $mac_address;
+
+        if (!in_array($new_mac_address, $this->get_all_mac_adds())){
+            return response()->json([
+                'boolean' => true,
+                'error_message' => "the requested mac address is available for use at this time",
+                ]);
+
+        } else {
+            $equipment_name = Equipment::all()
+                ->where('mac_address', $new_mac_address)
+                ->pluck('name')
+                ->toArray();
+            // var_dump($equipment_name[0]);
+
+            $equipment_serial = Equipment::all()
+                ->where('mac_address', $new_mac_address)
+                ->pluck('serial_number')
+                ->toArray();
+            // var_dump($equipment_serial[0]);
+
+            return response()->json([
+                'boolean' => false,
+                'error_message' => "the requested mac address is unavailable for use at this time because it lives in this network attached to the equipment with name: '$equipment_name[0]' and serial#: '$equipment_serial[0]'",
+                ]);
+        }
+
+    }
+
+    //returns all mac addresses currently in use
+    public function get_all_mac_adds()
+    {
+        $mac_adds = Equipment::all()
+            ->pluck('mac_address')
+            ->toArray();
+        // var_dump($mac_adds);
+
+        return $mac_adds;
 
     }
 

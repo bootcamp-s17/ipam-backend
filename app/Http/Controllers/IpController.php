@@ -142,7 +142,7 @@ class IpController extends Controller
 
                     return response()->json([
                         'boolean' => false,
-                        'error_message' => "the requested ip address is currently being used by the equipment with name: $equipment_name[0] and serial#: $equipment_serial[0]",
+                        'error_message' => "the requested ip address is currently being used by the equipment with name: '$equipment_name[0]' and serial#: '$equipment_serial[0]'",
                         'error_number' => 3,
                         ]);
 
@@ -156,7 +156,7 @@ class IpController extends Controller
 
                 return response()->json([
                     'boolean' => false,
-                    'error_message' => "False, the requested ip address is outside of the given maskbit range for the specified subnet address, the new ip address should end with anything between $min and $max",
+                    'error_message' => "the requested ip address is outside of the given maskbit range for the specified subnet address, the new ip address should end with anything between $min and $max",
                     'error_number' => 2,
                     ]);
 
