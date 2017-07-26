@@ -14,36 +14,31 @@ class EquipmentsTableSeeder extends Seeder
 
         DB::table('equipments')->insert([
             'name' => "BLM-114-NI AMX Netlinx for Podium",
-            'equipment_type_id' => 8,
+            'equipment_type_id' => 8, //Other
             'model' => '',
             'driver' => '',
             'serial_number' => 'fake cereal',
             'ip_address' => '10.34.138.200',
             'site_id' => 1,
             'subnet_id' =>'1',
+
             // 'host_name' => 'bobby',
             // 'port_number' => 80,
-            'mac_address' => '00-60-9f-93-79-b5',
+            'mac_address' => '00-60-9f-93-79-b1',
             'mab' => false,
-            // 'printer_server' => '',
-            // 'printer_name' => ,
-            // 'share_name' => ,
-            // 'share_comment' => ,
             'room_id'=> rand(1, 14),
         ]);
 
 
         DB::table('equipments')->insert([
             'name' => "BBLM-104A-Laser",
-            'equipment_type_id' => 1,
+            'equipment_type_id' => 1, //Printer
             'model' => 'HP LaserJet Pro MFP M521dn',
             'driver' => 'uniFLOW Universal Driver',
             'serial_number' => 'fake cereal',
             'ip_address' => '10.34.138.252',
             'site_id' => 1,
             'subnet_id' =>1,
-            // 'host_name' => 'bobby',
-            // 'port_number' => 80,
             'mac_address' => '00-04-00-cd-a1-b7',
             'mab' => true,
             'printer_server' => 'BLM-RPS',
@@ -55,15 +50,13 @@ class EquipmentsTableSeeder extends Seeder
 
         DB::table('equipments')->insert([
             'name' => "BLM-107-MFP",
-            'equipment_type_id' => 1,
+            'equipment_type_id' => 1, //Printer
             'model' => 'KM 423-BK',
             'driver' => 'KONICA MINOLTA 423SeriesPS',
             'serial_number' => 'fake cereal',
             'ip_address' => '10.34.138.254',
             'site_id' => 1,
             'subnet_id' =>1,
-            // 'host_name' => 'bobby',
-            // 'port_number' => 80,
             'mac_address' => '00-20-6b-7e-43-14',
             'mab' => true,
             'printer_server' => 'BLM-RPS',
@@ -75,15 +68,13 @@ class EquipmentsTableSeeder extends Seeder
 
         DB::table('equipments')->insert([
             'name' => "BLM-AE-114B-Laser",
-            'equipment_type_id' => 1,
+            'equipment_type_id' => 1, //Printer
             'model' => 'HP LaserJet 400 M401n',
             'driver' => 'uniFLOW Universal Driver',
             'serial_number' => 'fake cereal',
             'ip_address' => '10.34.139.247',
             'site_id' => 1,
             'subnet_id' =>2,
-            // 'host_name' => 'bobby',
-            // 'port_number' => 80,
             'mac_address' => '24-be-05-e7-39-d0',
             'mab' => true,
             'printer_server' => 'BLM-RPS',
@@ -95,15 +86,13 @@ class EquipmentsTableSeeder extends Seeder
 
         DB::table('equipments')->insert([
             'name' => "BLM-204-Laser",
-            'equipment_type_id' => 1,
+            'equipment_type_id' => 1, //Printer
             'model' => 'HP LaserJet 600 M601',
             'driver' => 'uniFLOW Universal Driver',
             'serial_number' => 'fake cereal',
             'ip_address' => '10.34.139.249',
             'site_id' => 1,
             'subnet_id' =>2,
-            // 'host_name' => 'bobby',
-            // 'port_number' => 80,
             'mac_address' => '00-9c-02-02-f8-4f',
             'mab' => true,
             'printer_server' => 'BLM-RPS',
@@ -115,78 +104,58 @@ class EquipmentsTableSeeder extends Seeder
 
         DB::table('equipments')->insert([
             'name' => "Door Controller",
-            'equipment_type_id' => 4,
+            'equipment_type_id' => 4, //Door Controller
             'model' => '',
             'driver' => '',
             'serial_number' => 'fake cereal',
             'ip_address' => '10.34.140.105',
             'site_id' => 1,
             'subnet_id' =>3,
-            // 'host_name' => 'bobby',
-            // 'port_number' => 80,
             'mac_address' => '00-90-c2-e8-6e-67',
             'mab' => true,
-            // 'printer_server' => '',
-            // 'printer_name' => ,
-            // 'share_name' => ,
-            // 'share_comment' => ,
             'room_id'=> rand(1, 14),
         ]);
 
 
         DB::table('equipments')->insert([
             'name' => "BLM-Sign-217",
-            'equipment_type_id' => 2,
+            'equipment_type_id' => 2, //Computer
             'room_id' => 1,
-            // 'model' => '',
-            // 'driver' => '',
             'serial_number' => 'fake cereal',
             'ip_address' => '10.34.138.33',
+            'os_version' => 'Windows XP',
+            'physical' => true,
             'site_id' => 1,
             'subnet_id' =>1,
             'host_name' => 'bobby',
             'port_number' => 80,
             'mac_address' => '00-01-80-76-bf-9c',
             'mab' => false,
-            // 'printer_server' => '',
-            // 'printer_name' => ,
-            // 'share_name' => ,
-            // 'share_comment' => ,
             'room_id'=> rand(1, 14),
         ]);
 
         DB::table('equipments')->insert([
             'name' => "BLM-114-TouchPanel",
-            'equipment_type_id' => 8,
+            'equipment_type_id' => 8, //Other
             'room_id' => 4,
-            // 'model' => '',
-            // 'driver' => '',
             'serial_number' => 'fake cereal',
             'ip_address' => '10.34.138.201',
             'site_id' => 1,
             'subnet_id' =>1,
-            // 'host_name' => 'bobby',
-            // 'port_number' => 80,
             'mac_address' => '00-60-9f-93-ae-0d',
             'mab' => false,
-            // 'printer_server' => '',
-            // 'printer_name' => ,
-            // 'share_name' => ,
-            // 'share_comment' => ,
             'room_id'=> rand(1, 14),
         ]);
 
         DB::table('equipments')->insert([
             'name' => "BLM-204-MFP",
-            'equipment_type_id' => 1,
+            'equipment_type_id' => 1, //Printer
             'model' => 'KM C454e-D',
             'driver' => 'KONICA MINOLTA C554SeriesPS',
             'serial_number' => 'fake cereal',
             'ip_address' => '10.34.138.253',
             'site_id' => 1,
             'subnet_id' =>1,
-            // 'host_name' => 'bobby',
-            // 'port_number' => 80,
             'mac_address' => '00-20-6b-82-85-0f',
             'mab' => true,
             'printer_server' => 'BLM-RPS',
@@ -198,15 +167,13 @@ class EquipmentsTableSeeder extends Seeder
 
         DB::table('equipments')->insert([
             'name' => "BLM-AE-106B-Laser",
-            'equipment_type_id' => 1,
+            'equipment_type_id' => 1, //Printer
             'model' => 'uniFLOW Universal Driver',
             'driver' => 'KONICA MINOLTA C554SeriesPS',
             'serial_number' => 'fake cereal',
             'ip_address' => '10.34.139.246',
             'site_id' => 1,
             'subnet_id' =>2,
-            // 'host_name' => 'bobby',
-            // 'port_number' => 80,
             'mac_address' => '00-01-e6-4e-06-98',
             'mab' => true,
             'printer_server' => 'BLM-RPS',
@@ -218,15 +185,13 @@ class EquipmentsTableSeeder extends Seeder
 
         DB::table('equipments')->insert([
             'name' => "BLM-AE-114A-Color",
-            'equipment_type_id' => 1,
+            'equipment_type_id' => 1, //Printer
             'model' => 'HP LaserJet 400 color M451nw',
             'driver' => 'uniFLOW Universal Driver',
             'serial_number' => 'fake cereal',
             'ip_address' => '10.34.139.248',
             'site_id' => 1,
             'subnet_id' =>2,
-            // 'host_name' => 'bobby',
-            // 'port_number' => 80,
             'mac_address' => '24-be-05-ea-19-e8',
             'mab' => true,
             'printer_server' => 'BLM-RPS',
@@ -238,23 +203,43 @@ class EquipmentsTableSeeder extends Seeder
 
         DB::table('equipments')->insert([
             'name' => "HVAC Controller",
-            'equipment_type_id' => 4,
-            // 'model' => 'HP LaserJet 400 color M451nw',
-            // 'driver' => 'uniFLOW Universal Driver',
+            'equipment_type_id' => 4, //Door Controller
             'serial_number' => 'fake cereal',
             'ip_address' => '10.34.140.60',
             'site_id' => 1,
             'subnet_id' =>3,
-            // 'host_name' => 'bobby',
-            // 'port_number' => 80,
             'mac_address' => '00-01-f0-8d-6e-d4',
             'mab' => true,
-            // 'printer_server' => 'BLM-RPS',
-            // 'printer_name' => 'BLM-AE-114A-Color',
-            // 'share_name' => 'BLM-AE-114A-Color',
-            // 'share_comment' => 'BLM-114A Adult Ed HP LaserJet 400 color M451nw',
             'room_id'=> rand(1, 14),
         ]);
+
+        DB::table('equipments')->insert([
+            'name' => "Asus Network Switch",
+            'equipment_type_id' => 10, //Switch
+            'serial_number' => 'fake cerebral',
+            'ip_address' => '10.34.140.85',
+            'switch_man_ip' => '192.168.0.85',
+            'site_id' => 1,
+            'subnet_id' =>3,
+            'mac_address' => '03-01-f0-8d-6e-d4',
+            'mab' => true,
+            'room_id'=> rand(1, 14),
+        ]);
+
+        DB::table('equipments')->insert([
+            'name' => "Computer Lab PC 1",
+            'equipment_type_id' => 2, //Computer
+            'serial_number' => 'fake cerebral',
+            'ip_address' => '10.34.140.85',
+            'os_version' => 'Windows 95',
+            'physical' => true,
+            'site_id' => 1,
+            'subnet_id' =>3,
+            'mac_address' => 'A3-01-f0-8d-6e-d4',
+            'mab' => true,
+            'room_id'=> rand(1, 14),
+        ]);
+
 
     }
 }

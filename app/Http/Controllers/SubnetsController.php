@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Subnet;
 use App\Note;
 use App\Equipment;
+use Validator;
+
 use Illuminate\Http\Request;
 
 class SubnetsController extends Controller
@@ -49,18 +51,34 @@ class SubnetsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        $subnet = new \App\Subnet;
+    {   
+        // validate incoming request
+        $validator = $this->validates($request);
+        // if there are any errors
+        if ($validator->fails()) {
+            // return the request and errors
+            return array(
+                    'data' => request()->all(),
+                    'errors' => $validator->errors()->all(),
+                );
+        }
+
+        $subnet = new Subnet;
         $subnet->fill($request->all())->save();
 
         //Insert notes
+
         if ($request->notes()) {
             $subnet_id = $subnet->id;
             $note = new \App\Note(['text'=>$request->notes]);
             $subnet = \App\Subnet::find($subnet_id);
             $note = $subnet->notes()->save($note);
         }
-        return response()->json($subnet);
+        return response()->json(array(
+            "data" => $subnet,
+            "message" => 'Successfully added.',
+            "status" => 200,
+            ));
     }
 
     /**
@@ -95,15 +113,33 @@ class SubnetsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Subnet $subnets)
-    {
+    {   
+         // validate incoming request
+        $validator = $this->validates($request);
+        // if there are any errors
+        if ($validator->fails()) {
+            // return the request and errors
+            return array(
+                    'data' => request()->all(),
+                    'errors' => $validator->errors()->all(),
+                );
+        }
+
         $subnets = \App\Subnet::find($request->id);
         $subnets->fill($request->all())->save();
         if ($request->notes()) {
         $note = new \App\Note(['text'=>$request->notes]);
         $subnet = \App\Subnet::find($request->id);
         $note = $subnet->notes()->save($note);
-        }
-        return response()->json($subnets,200);
+
+        
+        return response()->json(array(
+            "data" => $subnet,
+            "message" => 'Successfully updated.',
+            "status" => 200,
+            ));
+
+        
     }
 
     /**
@@ -116,7 +152,27 @@ class SubnetsController extends Controller
     {
         $subnets->delete();
 
-        return response()->json(null,204);
+        return response()->json(array(
+            "data" => $subnets,
+            'message' => 'Deleted.',
+            'status' => 204,
+            ));
+    }
+
+    public function validates ($request){
+        // https://laravel.com/docs/5.4/validation
+        // validate incoming request
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|filled|string|max:75|unique:sites',
+            'site_id' => 'required|filled|integer|exists:sites,id',
+            'subnet_address' => 'required|filled|ip',
+            'mask_bits' => 'integer|min:1|max:32',
+            'vLan' => 'integer',
+            'lease_time' => 'integer'
+            'notes' => 'string|max:250',
+        ]);
+        // return the valedator object
+        return $validator;      
     }
 
     //returns all subnet addresses from subnets table

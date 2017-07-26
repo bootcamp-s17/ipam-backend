@@ -32,7 +32,9 @@ class CreateEquipmentsTable extends Migration //added an s
             $table->foreign('site_id')->references('id')->on('sites');
             $table->integer('subnet_id')->unsigned();
             $table->foreign('subnet_id')->references('id')->on('subnets');
-            
+            $table->ipAddress('switch_man_ip')->nullable();
+            $table->string('os_version')->nullable;
+            $table->boolean('physical')->nullable;
             $table->string('host_name')->nullable();
             $table->integer('port_number')->nullable();
             $table->macAddress('mac_address');
@@ -41,8 +43,6 @@ class CreateEquipmentsTable extends Migration //added an s
             $table->string('printer_name')->nullable();
             $table->string('share_name')->nullable();
             $table->string('share_comment')->nullable();
-            // $table->integer('note_id')->unsigned();
-            // $table->foreign('note_id')->refereces('id')->on('notes');
             $table->softDeletes();
             $table->timestamps();
 
