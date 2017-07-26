@@ -15,10 +15,10 @@ class EquipmentTypeController extends Controller
     public function index()
     {
         //
-        $equipment_type = EquipmentType::all()
-            ->pluck('id', 'name')
-            ->toArray();
-        var_dump($equipment_type);
+        $equipment_type = EquipmentType::all();
+        // var_dump($equipment_type);
+
+        return $equipment_type;
     }
 
     /**
