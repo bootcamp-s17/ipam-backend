@@ -29,7 +29,7 @@ class SitesController extends Controller
             }
         }
 
-        return $sites;    
+        return response()->json($sites,200);    
     }
 
     /**
@@ -54,11 +54,13 @@ class SitesController extends Controller
         $site->fill($request->all())->save();
         
         //Insert notes
-        $site_id = $site->id;
-        $note = new \App\Note(['text'=>$request->notes]);
-        $site = \App\Site::find($site_id);
-        $note = $site->notes()->save($note);
-        return json($site);
+        if ($request->notes()) {
+            $site_id = $site->id;
+            $note = new \App\Note(['text'=>$request->notes]);
+            $site = \App\Site::find($site_id);
+            $note = $site->notes()->save($note);
+        }
+        return response()->json($site);
 
 
     }
@@ -100,12 +102,12 @@ class SitesController extends Controller
     {
         $sites = \App\Site::find($request->id);
         $sites->fill($request->all())->save();
-
-        $note = new \App\Note(['text'=>$request->notes]);
-        $site = \App\Site::find($request->id);
-        $note = $site->notes()->save($note);
-
-        return json($sites);
+        if ($request->notes()) {
+            $note = new \App\Note(['text'=>$request->notes]);
+            $site = \App\Site::find($request->id);
+            $note = $site->notes()->save($note);
+        }
+        return response()->json($sites,200);
     }
 
     /**
@@ -118,6 +120,6 @@ class SitesController extends Controller
     {
         $site = \App\Site::find($sites->id);
         $site->delete();
-        return json(null);
+        return response()->json(null,204);
     }
 }
