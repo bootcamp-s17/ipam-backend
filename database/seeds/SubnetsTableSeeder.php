@@ -15,6 +15,7 @@ class SubnetsTableSeeder extends Seeder
             'name' => "BL-Employee-Wired",
             'site_id' => 1,
             'subnet_address' => '10.34.138.0',
+            'lease_time' => 360,
             'mask_bits' => 24,
             'vLan' => 200,
         ]);
@@ -23,6 +24,7 @@ class SubnetsTableSeeder extends Seeder
             'name' => "BL-Classroom-Wired",
             'site_id' => 1,
             'subnet_address' => '10.34.139.0',
+            'lease_time' => 360,
             'mask_bits' => 25,
             'vLan' => 300,
         ]);
@@ -31,6 +33,7 @@ class SubnetsTableSeeder extends Seeder
             'name' => "BL-Server-Wired",
             'site_id' => 1,
             'subnet_address' => '10.34.140.0',
+            'lease_time' => 360,
             'mask_bits' => 25,
             'vLan' => 220,
         ]);
@@ -39,6 +42,7 @@ class SubnetsTableSeeder extends Seeder
             'name' => "BL-Guest-Auth_Fail",
             'site_id' => 1,
             'subnet_address' => '10.34.140.128',
+            'lease_time' => 360,
             'mask_bits' => 25,
             'vLan' => 300,
         ]);
@@ -47,6 +51,7 @@ class SubnetsTableSeeder extends Seeder
             'name' => "BL-Guest_Wireless",
             'site_id' => 1,
             'subnet_address' => '10.34.183.0',
+            'lease_time' => 360,
             'mask_bits' => 24,
             'vLan' => 310,
         ]);
@@ -55,6 +60,7 @@ class SubnetsTableSeeder extends Seeder
             'name' => "BL-Employee_Wireless",
             'site_id' => 1,
             'subnet_address' => '10.34.184.0',
+            'lease_time' => 360,
             'mask_bits' => 24,
             'vLan' => 210,
         ]);
@@ -63,6 +69,7 @@ class SubnetsTableSeeder extends Seeder
             'name' => "WirelessMgmt",
             'site_id' => 1,
             'subnet_address' => '10.34.189.96',
+            'lease_time' => 360,
             'mask_bits' => 27,
             'vLan' => 700,
         ]);
@@ -71,6 +78,7 @@ class SubnetsTableSeeder extends Seeder
             'name' => "BL-Public-Wired",
             'site_id' => 1,
             'subnet_address' => '216.69.8.216',
+            'lease_time' => 360,
             'mask_bits' => 29,
             'vLan' => 330,
         ]); 
