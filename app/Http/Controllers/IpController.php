@@ -130,14 +130,12 @@ class IpController extends Controller
                 else {
                     $equipment_name = Equipment::all()
                         ->where('ip_address', $new_ip_address)
-                        ->pluck('name')
-                        ->toArray();
+                        ->pluck('name');
                     // var_dump($equipment_name[0]);
 
                     $equipment_serial = Equipment::all()
                         ->where('ip_address', $new_ip_address)
-                        ->pluck('serial_number')
-                        ->toArray();
+                        ->pluck('serial_number');
                     // var_dump($equipment_serial[0]);
 
                     return response()->json([
@@ -229,6 +227,7 @@ class IpController extends Controller
         return response()->json($ips);
         // return $ips;
     }
+
     
 
     /**

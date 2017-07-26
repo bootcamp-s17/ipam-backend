@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Subnet;
 use App\Note;
+use App\Equipment;
 use Illuminate\Http\Request;
 
 class SubnetsController extends Controller
@@ -117,4 +118,131 @@ class SubnetsController extends Controller
 
         return response()->json(null,204);
     }
+
+    //returns all subnet addresses from subnets table
+    public function get_all_subnet_addresses()
+    {   
+        $subnets = Subnet::all()->pluck('subnet_address')->toArray();
+        // var_dump($subnets);
+        return $subnets;
+    }
+
+    //returns the maskbit range 
+    public function get_mask_bit_range($mask_bits)
+    {   
+        //Base maskbit number full range from 0-255 
+        $base = 24;
+        $increment = floor($mask_bits - $base);
+        //as the maskbit number increases from 24 on, the range gets halfed upon each increment
+        $range = intval(floor(255 / (pow(2,$increment))));
+        // var_dump($range);
+        return $range;
+    }
+
+    //returns validation to if the given subnet address complys with the given maskbit range
+    public function check_mask_bit_range($mask_bits, $new_subnet_address)
+    {
+        //Saving the value of 4th slot of the given subnet address
+        $last_digit_array = explode('.', $new_subnet_address);
+        $last_digit = intval(array_pop($last_digit_array));
+        // var_dump($last_digit); 
+
+
+        if($last_digit > 0 && $last_digit <= $this->get_mask_bit_range($mask_bits)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    //checks to see if entered subnet address is in use
+    //returns where the address is currently being used
+    public function subnet_address_check($new_subnet_address)
+    {
+                //extracts the first three digit slots for comparision
+        $new_get_first3_digits1 = explode('.', $new_subnet_address);
+        $new_get_first3_digits2 = intval(array_pop($new_get_first3_digits1));
+        $new_get_first3_digits3 = implode('.', $new_get_first3_digits1);
+        // var_dump($new_get_first3_digits1);
+        // var_dump($new_get_first3_digits2);
+        // var_dump($new_get_first3_digits3);
+
+        foreach($this->get_all_subnet_addresses() as $subnets){
+            //extracts the first three digit slots for comparision
+            $get_first3_digits1 = explode('.', $subnets);
+            $get_first3_digits2 = intval(array_pop($get_first3_digits1));
+            $get_first3_digits3 = implode('.', $get_first3_digits1);
+            // var_dump($get_first3_digits1);
+            // var_dump($get_first3_digits2);
+            // var_dump($get_first3_digits3);
+            
+
+            if ($new_get_first3_digits3 === $get_first3_digits3){
+                //re-concating the subnet address to find where it lives
+                $subnet_match = $get_first3_digits3 . '.' . 0;
+                // var_dump($subnet_match);
+
+                //finding where the entered subnet address currently lives
+                $used_subnet_address = Subnet::all()
+                    ->where('subnet_address', $subnet_match)
+                    ->pluck('name');
+
+                return $used_subnet_address[0];
+                // return response()->json([
+                //     'boolean' => false,
+                //     'error_message' => "the subnet address you are attempting to use is currently being used by the subnet with name: '$used_subnet_address'",
+                //     ]);
+            }
+        }
+    }
+
+    //validates if the given subnet address is ok to use
+    public function check($mask_bits, $new_subnet_address)
+    {
+        if ($this->subnet_address_check($new_subnet_address) != null){
+            $used_subnet_name = $this->subnet_address_check($new_subnet_address);
+
+            return response()->json([
+                    'boolean' => false,
+                    'error_message' => "the subnet address you are attempting to use is currently being used by the subnet with name: '$used_subnet_name'",
+                    ]);
+        } else {
+            if ($this->check_mask_bit_range($mask_bits, $new_subnet_address) === true){
+                return response()->json([
+                    'boolean' => true,
+                    'error_message' => 'none',
+                    'error_number' => 0,
+                ]);
+            }
+            else {
+                $max = $this->get_mask_bit_range($mask_bits);
+
+                return response()->json([
+                    'boolean' => false,
+                    'error_message' => "the 4th digit in the given new subnet address does not comply with the given mask bit range, this digit should be between 1 and $max",
+                    'error_number' => 0,
+                ]);
+            }
+        } 
+        
+    }
+
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
