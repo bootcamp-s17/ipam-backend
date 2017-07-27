@@ -131,7 +131,7 @@ class SubnetsController extends Controller
         $note = new \App\Note(['text'=>$request->notes]);
         $subnet = \App\Subnet::find($request->id);
         $note = $subnet->notes()->save($note);
-
+        }
         
         return response()->json(array(
             "data" => $subnet,
@@ -168,7 +168,7 @@ class SubnetsController extends Controller
             'subnet_address' => 'required|filled|ip',
             'mask_bits' => 'integer|min:1|max:32',
             'vLan' => 'integer',
-            'lease_time' => 'integer'
+            'lease_time' => 'integer',
             'notes' => 'string|max:250',
         ]);
         // return the valedator object
