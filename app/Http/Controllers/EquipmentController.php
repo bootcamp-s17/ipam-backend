@@ -68,7 +68,7 @@ class EquipmentController extends Controller
         $equip->fill($request->all())->save();
 
         //Insert notes
-        if ($request->notes()) {
+        if ($equip->notes()) {
             $equip_id = $equip->id;
             $note = new \App\Note(['text'=>$request->notes]);
             $equip = \App\Equip::find($equip_id);
@@ -132,7 +132,7 @@ class EquipmentController extends Controller
 
         $equip = new \App\Equipment;
         $equip->fill($request->all())->save();
-        if ($request->notes()) {
+        if ($equip->notes()) {
             $note = new \App\Note(['text'=>$request->notes]);
             $equip = \App\Equip::find($request->id);
             $note = $equip->notes()->save($note);
