@@ -23,7 +23,7 @@ class EquipmentsTest extends TestCase
      * @return void
      */
      //test to make sure route exists and returns JSON
-    public function testEquipments (){
+    public function testEquipmentsEndpoint (){
         $response = $this->get('/api/equipment');
 
         $response->assertStatus(200)->assertJson([]);

@@ -23,7 +23,7 @@ use DatabaseTransactions;
      * @return void
      */
      //test to make sure route exists and returns JSON
-    public function testSubnets (){
+    public function testSubnetsEndpoint (){
         $response = $this->get('/api/subnets');
 
         $response->assertStatus(200)->assertJson([]);

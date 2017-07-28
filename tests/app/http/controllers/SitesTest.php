@@ -14,15 +14,8 @@ class SitesTest extends TestCase
 {
    use DatabaseTransactions;
 
-
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-
-     //test to make sure route exists and returns JSON
-    public function testSites (){
+  
+    public function testSitesSitesEndpoint (){
         $response = $this->get('/api/sites');
 
         $response->assertStatus(200)->assertJson([]);
