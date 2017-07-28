@@ -21,7 +21,7 @@ class Note extends Model
     static function getNotes ($model, $id){
       // get the row of model that matches id
       // also orders by most recently created_at
-      $model = $model::find($id)->notes->sortByDesc('created_at')->values()->all();;
+      $model = $model::find($id)->notes->sortByDesc('created_at')->values()->all();
       $modelNotes = array();
       
       // find all notes associated with the specified model 
