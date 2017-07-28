@@ -14,13 +14,7 @@ class SitesTest extends TestCase
 {
    use DatabaseTransactions;
 
-
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-    public function testSitesSites (){
+    public function testSitesSitesEndpoint (){
         $response = $this->get('/api/sites');
 
         $response->assertStatus(200)->assertJson([]);
@@ -58,7 +52,10 @@ class SitesTest extends TestCase
         $response = $this->post("/api/sites/$response", [
             "_method" => "PUT",
             "id" => $response,
-            'name'=> 'Joe'
+            'name'=> 'Joe',
+            'address' => "Luther Crater, The Moon",
+            'abbreviation' => "MC",
+            'site_contact' => "Joe Gill (859)555-5555",
             ]);
         
         $this->assertDatabaseHas('sites', [

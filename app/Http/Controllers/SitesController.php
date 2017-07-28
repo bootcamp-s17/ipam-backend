@@ -65,19 +65,17 @@ class SitesController extends Controller
         $site = new Site;
         $site->fill($request->all())->save();
         //Insert notes
-        if ($request->notes()) {
+        if ($site->notes()) {
             $site_id = $site->id;
             $note = new \App\Note(['text'=>$request->notes]);
             $site = \App\Site::find($site_id);
             $note = $site->notes()->save($note);
         }
         return response()->json(array(
-            "data" => $sites,
+            "data" => $site,
             "message" => 'Successfully added.',
             "status" => 200,
             ));
-
-
     }
 
     /**
@@ -86,12 +84,14 @@ class SitesController extends Controller
      * @param  \App\Sites  $sites
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show(Site $sites)
     {
+        
+
         $subnets = $sites->subnets()->get();
         $sites['subnets'] = $subnets;
         $sites['notes'] = Note::getNotes('App\Site', $sites->id);
-        return json($sites);
+        return response()->json($sites);
     }
 
     /**
@@ -126,17 +126,17 @@ class SitesController extends Controller
                 );
         }
 
-        $sites = \App\Site::find($request->id);
-        $sites->fill($request->all())->save();
-        if ($request->notes()) {
+        $site = \App\Site::find($request->id);
+        $site->fill($request->all())->save();
+        if ($site->notes()) {
             $note = new \App\Note(['text'=>$request->notes]);
-            $sites = \App\Site::find($request->id);
+            $site = \App\Site::find($request->id);
             $note = $site->notes()->save($note);
         }
 
 
         return response()->json(array(
-            "data" => $sites,
+            "data" => $site,
             "message" => 'Successfully updated.',
             "status" => 200,
             ));

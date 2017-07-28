@@ -68,7 +68,7 @@ class SubnetsController extends Controller
 
         //Insert notes
 
-        if ($request->notes()) {
+        if ($subnet->notes()) {
             $subnet_id = $subnet->id;
             $note = new \App\Note(['text'=>$request->notes]);
             $subnet = \App\Subnet::find($subnet_id);
@@ -125,9 +125,9 @@ class SubnetsController extends Controller
                 );
         }
 
-        $subnets = \App\Subnet::find($request->id);
-        $subnets->fill($request->all())->save();
-        if ($request->notes()) {
+        $subnet = \App\Subnet::find($request->id);
+        $subnet->fill($request->all())->save();
+        if ($subnet->notes()) {
         $note = new \App\Note(['text'=>$request->notes]);
         $subnet = \App\Subnet::find($request->id);
         $note = $subnet->notes()->save($note);
