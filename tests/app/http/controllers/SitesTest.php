@@ -50,28 +50,28 @@ class SitesTest extends TestCase
     }
 
     //test to make sure we can PUT data via api to the database and confirm it exists
-    //test failing -- this test was passing but now is not. Something on the dev branch
-    //must have changed but currently not sure what
+    public function testPutSite(){
+        $response = DB::table('sites')->insertGetId([
+            'name' => "Sally",
+            'address' => "Luther Crater, The Moon",
+            'abbreviation' => "MC",
+            'site_contact' => "Joe Gill (859)555-5555",
+        ]);
 
-    // public function testPutSite(){
-    //     $response = DB::table('sites')->insertGetId([
-    //         'name' => "Sally",
-    //         'address' => "Luther Crater, The Moon",
-    //         'abbreviation' => "MC",
-    //         'site_contact' => "Joe Gill (859)555-5555",
-    //     ]);
-
-    //     $response = $this->post("/api/sites/$response", [
-    //         "_method" => "PUT",
-    //         "id" => $response,
-    //         'name'=> 'Joe'
-    //         ]);
+        $response = $this->post("/api/sites/$response", [
+            "_method" => "PUT",
+            "id" => $response,
+            'name'=> 'Joe',
+            'address' => "Luther Crater, The Moon",
+            'abbreviation' => "MC",
+            'site_contact' => "Joe Gill (859)555-5555",
+            ]);
         
-    //     $this->assertDatabaseHas('sites', [
-    //         'name' => 'Joe'
-    //     ]); 
+        $this->assertDatabaseHas('sites', [
+            'name' => 'Joe'
+        ]); 
 
-    // }
+    }
 
     //test to make sure we are able to delete items
     public function testDeleteSite(){

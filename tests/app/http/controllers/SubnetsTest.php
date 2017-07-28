@@ -52,29 +52,30 @@ use DatabaseTransactions;
     }
 
     //test to make sure we can PUT data via api to the database and confirm it exists
-    //test failing -- this test was passing but now is not. Something on the dev branch
-    //must have changed but currently not sure what
+    public function testPutSubnet(){
+        $response = DB::table('subnets')->insertGetId([
+             'name' => "BL-Guest_Sample",
+             'site_id' => "1",
+             'subnet_address' => "216.69.8.194",
+             'mask_bits' => "24",
+             'vLan' => "210"
+        ]);
 
-    // public function testPutSubnet(){
-    //     $response = DB::table('subnets')->insertGetId([
-    //          'name' => "BL-Guest_Sample",
-    //          'site_id' => "1",
-    //          'subnet_address' => "216.69.8.194",
-    //          'mask_bits' => "24",
-    //          'vLan' => "210"
-    //     ]);
-
-    //     $response = $this->post("/api/subnets/$response", [
-    //         "_method" => "PUT",
-    //         "id" => $response,
-    //         'name'=> 'BL-Employee_Wires'
-    //         ]);
+        $response = $this->post("/api/subnets/$response", [
+            "_method" => "PUT",
+            "id" => $response,
+            'name'=> 'BL-Employee_Wires',
+            'site_id' => "1",
+            'subnet_address' => "216.69.8.194",
+            'mask_bits' => "24",
+            'vLan' => "210"
+            ]);
         
-    //     $this->assertDatabaseHas('subnets', [
-    //         'name' => 'BL-Employee_Wires'
-    //     ]); 
+        $this->assertDatabaseHas('subnets', [
+            'name' => 'BL-Employee_Wires'
+        ]); 
 
-    // }
+    }
 
      //test to make sure we are able to delete items
     public function testDeleteSubnet(){
