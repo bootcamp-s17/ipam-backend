@@ -14,7 +14,6 @@ class SitesTest extends TestCase
 {
    use DatabaseTransactions;
 
-  
     public function testSitesSitesEndpoint (){
         $response = $this->get('/api/sites');
 
