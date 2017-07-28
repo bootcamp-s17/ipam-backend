@@ -17,7 +17,6 @@ class SitesController extends Controller
     public function index()
     {
         
-
         $sites = Site::orderBy('name')->get();
 
         // for each site add notes if there are any

@@ -76,6 +76,9 @@ php artisan serve --port=7000
 
 - 'equipment_types' - (GET) returns both id and name columns from equipment types table
 
+### Notes for each endpoint
+- sorted in descending order by created_at column
+- returns text, user_id, and last_updated;
 
 
 
