@@ -20,13 +20,15 @@ class SitesTest extends TestCase
      *
      * @return void
      */
+
+     //test to make sure route exists and returns JSON
     public function testSitesSites (){
         $response = $this->get('/api/sites');
 
         $response->assertStatus(200)->assertJson([]);
     }
 
-
+    //test to make sure we can POST data via api to the database and confirm it exists after posting
     public function testStoreSites(){
 
         $response = $this->json('POST', '/api/sites', [
@@ -47,6 +49,7 @@ class SitesTest extends TestCase
         ]);   
     }
 
+    //test to make sure we can PUT data via api to the database and confirm it exists
     public function testPutSite(){
         $response = DB::table('sites')->insertGetId([
             'name' => "Sally",
@@ -67,6 +70,7 @@ class SitesTest extends TestCase
 
     }
 
+    //test to make sure we are able to delete items
     public function testDeleteSite(){
         $response = DB::table('sites')->insertGetId([
             'name' => "Jolly",
