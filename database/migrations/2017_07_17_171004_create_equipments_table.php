@@ -33,8 +33,8 @@ class CreateEquipmentsTable extends Migration //added an s
             $table->integer('subnet_id')->unsigned();
             $table->foreign('subnet_id')->references('id')->on('subnets');
             $table->ipAddress('switch_man_ip')->nullable();
-            $table->string('os_version')->nullable;
-            $table->boolean('physical')->nullable;
+            $table->string('os_version')->nullable();
+            $table->boolean('physical')->nullable();
             $table->string('host_name')->nullable();
             $table->integer('port_number')->nullable();
             $table->macAddress('mac_address');
